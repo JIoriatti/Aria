@@ -1,0 +1,35 @@
+.leftArrow{
+    left: 0;
+    background: linear-gradient(to right,black, 75%, transparent); 
+}
+.leftArrowImage{
+    background: url('../../public/arrow-left-4-svgrepo-com.png');
+}
+.rightArrow{
+    background: linear-gradient(to left,black, 75%, transparent);
+}
+.rightArrowImage{
+    background: url('../../public/arrow-left-4-svgrepo-com.png');
+    rotate: 180deg;
+}
+.leftArrow,.rightArrow{
+    position: absolute;
+    top: 50px;
+    height: 230px;
+    width: 70px;
+    align-self: flex-start;
+    z-index: 101;
+
+    transition: 0.1s all ease-in-out;
+    cursor: pointer;
+}
+.leftArrow:hover,.rightArrow:hover{
+    opacity: 0.6;
+}
+.rightArrowImage,.leftArrowImage{
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 50%;
+    height: 100%;
+    width: 100%;
+}

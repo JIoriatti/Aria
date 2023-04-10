@@ -1,0 +1,89 @@
+.container{
+    position: absolute;
+    display: flex;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+}
+.imageWrapper{
+    height: 55px;
+    width: 55px;
+    min-width: 55px;
+    align-self: center;
+    margin-right: 0.5em;
+}
+.timer{
+    text-align: center;
+    font-size: 15px;
+    color: rgb(255, 255, 255);
+    height: max-content;
+    min-width: 50px;
+    max-width: 50px;
+    align-self: center;
+    /* margin: 0 1em 0 1em; */
+    padding: 1em;
+}
+.middleWrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    width: 30%;
+    padding: 0.5em;
+}
+.infoContainer{
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 0.5em;
+    color: white;
+    font-size: 15px;
+    
+    /* word-wrap: break-word; */
+    overflow: hidden;
+    /* text-overflow: ellipsis; */
+}
+.songNameArtistName{
+    white-space: nowrap;
+    /* word-wrap: break-word; */
+}
+
+.songNameArtistName:hover {  
+    animation: scrolling 12s .2s linear 1;
+  }
+
+
+  @keyframes scrolling {
+    from { left: 0; transform: translate3d(0, 0, 0); }
+    to { transform: translate3d(-100%, 0, 0); }
+  }
+
+/* .artistName,.songName{
+    display: block;
+    align-items: center;
+    min-width: 5em;
+    max-width: 10em;
+    height: auto;
+    padding: 0.5em;
+    text-align: center;
+
+    color: white;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+} */
+
+
+
+@media (max-width:475px){
+    .container{
+        right: 0;
+        min-width: 60%;
+        justify-content: flex-end;
+    }
+
+}
+@media (max-width:400px){
+    .container{
+        width: 60%;
+    }
+
+}

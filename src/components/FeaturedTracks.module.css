@@ -1,0 +1,55 @@
+.mainContainer{
+    /* position: absolute;
+    left: 0;
+    top: 800px; */
+    display: flex;
+    flex-direction: column;
+    padding-left: 4em;
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 100%;
+    height: 400px;
+}
+.title{
+    margin: 0.5em 0 1em 0;
+    color: white;
+    font-size: 80px;
+}
+.wrapper{
+    display: flex;
+    height: max-content;
+    width: 100%;
+}
+.trackInfoContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 0 0 4em;
+}
+.trackNameReleaseWrapper{
+    display: flex;
+    flex-direction: column;
+    margin-top: 3em;
+    height: max-content;
+}
+.trackName{
+    color: white;
+    margin: 0;
+    font-size: 58px;
+}
+.duration{
+    justify-self: flex-end;
+    margin-bottom: 0;
+}
+.image{
+    border-radius: 5px;
+    align-self: flex-start;
+    cursor: pointer;
+}
+.releaseDate,.duration{
+    color: white;
+    font-size: 20px;
+}
