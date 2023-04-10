@@ -18,7 +18,7 @@ export default function SongPlayerBar({font}){
         return (
             <AnimatePresence>
                 {/* && !songState.isTimerHit */}
-                {songState.isImageClicked &&
+                {songState.isImageClicked && !songState.isTimerHit &&
                     <motion.div
                         className={styles.container + ' ' + font}
                         initial={{ opacity: 0 }}
