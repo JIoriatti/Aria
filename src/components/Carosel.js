@@ -16,7 +16,7 @@ const SHORT_DUR = 1000 //1000
 const LONG_DUR = 2000   //2000
 const DUR_THRESHOLD = 0.95
 
-export default function Carosel2({setTimerHit, data, loading, videoRef}){
+export default function Carosel({setTimerHit, data, loading, videoRef}){
     const [isRowHovered, setIsRowHovered] = useState(false);
     const state = useStateContext();
     const dispatch = useDispatchContext();

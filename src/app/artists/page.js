@@ -7,7 +7,7 @@ import {motion, AnimatePresence, useAnimationControls} from 'framer-motion'
 import { useStateContext, useDispatchContext } from 'utils/ReducerContext'
 import SongPlayerBar from '@/components/SongPlayerBar'
 import getArtistData from 'lib/getArtistData'
-import Carosel2 from '@/components/Carosel'
+import Carosel from '@/components/Carosel'
 import DynamicHeader from '@/components/DynamicHeader'
 import { ACTIONS } from 'utils/actions'
 import Hero from '@/components/Hero'
@@ -168,9 +168,9 @@ return (
                 animate={{opacity: 1}}
                 exit={{opacity: 1}}
               >
-                <Carosel2 setTimerHit={setTimerHit} data={topTracks} loading={loading} videoRef={videoRef}/>
-                <Carosel2 setTimerHit={setTimerHit} data={albums} loading={loading} videoRef={videoRef}/>
-                <Carosel2 setTimerHit={setTimerHit} data={singles} loading={loading} videoRef={videoRef}/>
+                <Carosel setTimerHit={setTimerHit} data={topTracks} loading={loading} videoRef={videoRef}/>
+                <Carosel setTimerHit={setTimerHit} data={albums} loading={loading} videoRef={videoRef}/>
+                <Carosel setTimerHit={setTimerHit} data={singles} loading={loading} videoRef={videoRef}/>
                 <ArtistInfo artistData={artistData} loading={loading}/>
               </motion.div>
             }
