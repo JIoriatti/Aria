@@ -67,7 +67,7 @@ export default function DynamicHeader({ font, artistData }) {
                         className={styles.appName}
                     >
                         {/* {artistData?.artistInfo.name} */}
-                        Anjuna
+                        Aria
                     </h1>
                     <nav className={styles.navigation}>
                     </nav>
