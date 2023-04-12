@@ -59,25 +59,28 @@
     align-items: flex-start;
     color: white;
 }
-.history{
+.icon{
+    margin-top: 32px;
     height: 50px;
     width: 50px;
     max-height: 50px;
     max-width: 50px;
     display: block;
-    background-image: url('/song-history.png');
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
+    object-fit: cover;
     cursor: pointer;
 }
-.historyText{
+.iconImage{
+    height: 100%;
+    width: 100%;
+}
+.text{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 0 0 0 30px;
-    margin: 0;
+    padding: 0 0 0 15px;
+    margin-top: 32px;
     height: 50px;
+    /* padding-top: 5px; */
     width: 100%;
     font-size: 20px;
     cursor: pointer;

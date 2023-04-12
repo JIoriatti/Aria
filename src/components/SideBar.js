@@ -15,7 +15,7 @@ export default function SideBar({font}){
                 layout={true}
                 // style={{height: songState.isTimerHit ? '100%' : 'calc(100% - 151px)'}}
                 animate={{width: isHovered? 300 : 75, originX: 0, height: songState.isTimerHit ? '100%' : 'calc(100% - 151px)'}}
-                transition={{width: {duration: 0.2, delay: isHovered? 0.4 : 0}, height:{duration: 0.2, delay: songState.isTimerHit ? 0.2 : 0}}}
+                transition={{width: {duration: 0.2, delay: isHovered? 0.4 : 0}, height:{duration: 0.2, delay: songState.isTimerHit ? 0.1 : 0}}}
                 onMouseEnter={()=>setIsHovered(true)}
                 onMouseLeave={()=>setIsHovered(false)}
             >
@@ -29,12 +29,29 @@ export default function SideBar({font}){
                     </motion.div>
                     <div className={styles.iconContainer}>
                         <div 
-                            className={styles.history}
+                            className={styles.icon}
                         >
+                            <img 
+                                src="/favorites-star.png" 
+                                alt="History" 
+                                className={styles.iconImage}
+                            />
+                        </div>
+                        <div 
+                            className={styles.icon}
+                        >
+                            <img src="/eye.png" alt="History" className={styles.iconImage}/>
+                        </div>
+                        <div 
+                            className={styles.icon}
+                        >
+                            <img src="/song-history.png" alt="History" className={styles.iconImage}/>
                         </div>
                     </div>
                     <div className={styles.textContainer}>
-                        <div className={styles.historyText}>History</div>
+                        <div className={styles.text}>Favorites</div>
+                        <div className={styles.text}>Recently Viewed Artists</div>
+                        <div className={styles.text}>History</div>
                     </div>
                 </div>
             </motion.div>
