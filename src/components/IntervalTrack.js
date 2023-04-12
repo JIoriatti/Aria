@@ -8,7 +8,12 @@ export default function IntervalTrack ({tracks, index, setIndex}) {
             setIndex((prevIndex)=> prevIndex+=1)
         }
         if(e.target.dataset.dir === 'left'){
-            setIndex((prevIndex)=> prevIndex-=1)
+            if(index > 0) {
+                setIndex((prevIndex)=> prevIndex-=1)
+            }
+            if(index === 0){
+                setIndex(9);
+            }
         }
     }
 
@@ -21,7 +26,7 @@ export default function IntervalTrack ({tracks, index, setIndex}) {
             >
             
             </div>
-            {tracks.map((track,i)=>{
+            {tracks.slice(0,10).map((track,i)=>{
                 return <span key={i} className={styles.dot + ' ' + (index  == i ? styles.current : '')}></span>
             })}
             <div 
