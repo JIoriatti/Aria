@@ -1,0 +1,32 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    width: 75px;
+    position: fixed;
+    left: 0;
+    top: 84px;
+    height: 100%;
+    /* box-shadow: 0 0 10px 0 var(--themeColorLight); */
+
+    z-index: 10000;
+}
+.sideBar{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+}
+.background{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    /* background-color: rgb(12, 28, 52); */
+    /* background: rgb(64, 73, 87) */
+    /* background-image: linear-gradient(to top, var(--themeColorLight) 90%, var(--themeColorDark), 100%,transparent); */
+    background-color: var(--themeColorLight);
+
+    
+    z-index: -1;
+}

@@ -2,7 +2,6 @@ import styles from './IntervalTrack.module.css'
 import { useEffect, useState } from 'react';
 
 export default function IntervalTrack ({tracks, index, setIndex}) {
-    const [currentDot, setCurrentDot] = useState(null);
     
     const handleClick = (e)=>{
         if(e.target.dataset.dir === 'right'){
@@ -13,9 +12,6 @@ export default function IntervalTrack ({tracks, index, setIndex}) {
         }
     }
 
-    useEffect(()=>{
-        console.log(index)
-    },[index])
     return (
         <div className={styles.container}>
             <div 

@@ -55,7 +55,10 @@ export default function Arrow ({songContainer, isRowHovered}){
                     <motion.div
                         className={styles.rightArrow}
                         // style={{right: (screenWidthRef.current + 17)}}
-                        style={{left: (screenWidth - 70)}}
+
+                        //********* */
+                        style={{left: (screenWidth - 70) -75}}
+                        //***** */
                         onClick={handleClickRight}
                         initial={{opacity:0}}
                         animate={{opacity: 1}}

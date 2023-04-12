@@ -1,5 +1,5 @@
 .leftArrow{
-    left: 0;
+    left: -1px;
     background: linear-gradient(to right,#0f0f0f, 75%, transparent); 
 }
 .leftArrowImage{

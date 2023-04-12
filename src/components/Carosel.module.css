@@ -1,7 +1,7 @@
 
 .mainWrapper{
     display: flex;
-    padding: 0 4em 0 4em;
+    padding: 0 10em 0 4em;
     overflow-y: visible;
 }
 .wrapper{
@@ -34,7 +34,7 @@
     width: 100%;
     max-height: 300px;
     margin-top: 0em;
-    background: radial-gradient(circle, #1b1b1b, #0f0f0f);
+    background: radial-gradient(circle, var(--themeColorLight), var(--themeColorDark));
 }
 .container{
     display: flex;

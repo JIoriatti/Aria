@@ -1,3 +1,10 @@
+:root{
+    /* --themeColorLight: rgb(238, 240, 255); */
+    --themeColorDark: #0f0f0f;
+    --themeColorLight: #1b1b1b;
+    --accentLight: rgb(227, 211, 167);
+}
+
 html, body{
     position: relative;
     width: 100%;
@@ -7,8 +14,8 @@ html, body{
     max-width: 100%;
     padding: 0;
     margin: 0;
-    background-color: rgba(0, 0, 0, 0.567);
-    background-color: #0f0f0f;
+    /* background-color: rgba(0, 0, 0, 0.567); */
+    background-color: var(--themeColorDark);
     /* background-image: url('/JRLogo.png');
     background-position: center;
     background-size: contain;

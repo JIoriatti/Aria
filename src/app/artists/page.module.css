@@ -6,14 +6,15 @@
   min-height: 100vh;
   min-width: 100vw;
   margin: 0;
-  padding: 0;
+  padding-left: 75px;
+  /* padding-right: 75px;  */
   object-fit: contain;
 
   /* overflow-x: hidden; */
   /* overflow-y: scroll; */
   /* background: linear-gradient(to bottom, rgb(0, 0, 0) 10%, transparent 90%); */
   /* background-color: black; */
-  background-color: #0f0f0f;
+  background-color: var(--themeColorDark);
   /* background: rgba(0, 0, 0, 0.422); */
   background-repeat: no-repeat;
   background-position: center;

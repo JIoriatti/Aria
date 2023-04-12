@@ -8,6 +8,7 @@ import SongPlayerBar from '@/components/SongPlayerBar'
 import { AnimatePresence } from 'framer-motion'
 import { useStateContext, useDispatchContext } from 'utils/ReducerContext'
 import { useState, useEffect } from 'react'
+import SideBar from '@/components/SideBar'
 
 const font = League_Spartan({ subsets: ['latin'] })
 
@@ -28,6 +29,7 @@ export default function RootLayout({ children }) {
       <body>
       <SongProvider>
         <ReducerProvider >
+          <SideBar />
           {/* <SongProvider> */}
             {children}
           {/* </SongProvider> */}
