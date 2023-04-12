@@ -5,18 +5,25 @@ export default function IntervalTrack ({tracks, index, setIndex}) {
     
     const handleClick = (e)=>{
         if(e.target.dataset.dir === 'right'){
-            setIndex((prevIndex)=> prevIndex+=1)
+            if(index === tracks.length -1){
+                setIndex(0)
+            }
+            if(index < tracks.length -1){
+                setIndex((prevIndex)=> prevIndex+=1)
+            }
         }
         if(e.target.dataset.dir === 'left'){
             if(index > 0) {
                 setIndex((prevIndex)=> prevIndex-=1)
             }
             if(index === 0){
-                setIndex(9);
+                setIndex(tracks.length -1);
             }
         }
     }
-
+useEffect(()=>{
+    console.log(tracks)
+},[])
     return (
         <div className={styles.container}>
             <div 
@@ -26,7 +33,7 @@ export default function IntervalTrack ({tracks, index, setIndex}) {
             >
             
             </div>
-            {tracks.slice(0,10).map((track,i)=>{
+            {tracks.map((track,i)=>{
                 return <span key={i} className={styles.dot + ' ' + (index  == i ? styles.current : '')}></span>
             })}
             <div 

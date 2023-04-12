@@ -4,6 +4,7 @@ import HeroTrack from './HeroTrack'
 import { useDispatchContext, useStateContext } from 'utils/ReducerContext';
 import { motion } from 'framer-motion'
 import { ACTIONS } from 'utils/actions';
+import { useSongDispatchContext, useSongStateContext } from 'utils/SongContext';
 
 //**** for future dev: used adding/removal of event listener to handle hero song playing and 
 //** conditions instead of a bunch of if statements and booleans as I did on the videoHero. Remove redundant booleans and use
@@ -29,6 +30,8 @@ export default function HeroNoVideo ({font, artistData}){
     const containerRef = useRef();
     const state = useStateContext();
     const dispatch = useDispatchContext();
+    const songState = useSongStateContext();
+    const songDispatch = useSongDispatchContext();
 
     const trackScroll = useCallback(()=>{
         const rect = containerRef.current.getBoundingClientRect();
@@ -115,6 +118,7 @@ export default function HeroNoVideo ({font, artistData}){
                     audioRef.current.volume = MIN;
                 }}
                 onPlay={()=>{
+                    songDispatch({type: ACTIONS.IS_TIMER_HIT, payload: true})
                     audioRef.current.volume = MIN;
                     const fadeIn = setInterval(() => {
                         if(audioRef.current.volume + V_STEP < MAX){

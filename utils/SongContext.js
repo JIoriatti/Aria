@@ -25,7 +25,7 @@ export default function SongProvider({children}){
         songTime: 0,
         backgroundImage: '',
         isImageClicked: false,
-        isTimerHit: false,
+        isTimerHit: true,
         hasSongEnded: false,
     })
     return (

@@ -29,7 +29,7 @@ export default function RootLayout({ children }) {
       <body>
       <SongProvider>
         <ReducerProvider >
-          <SideBar />
+          <SideBar font={font.className}/>
           {/* <SongProvider> */}
             {children}
           {/* </SongProvider> */}

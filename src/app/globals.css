@@ -2,7 +2,7 @@
     /* --themeColorLight: rgb(238, 240, 255); */
     --themeColorDark: #0f0f0f;
     --themeColorLight: #1b1b1b;
-    --accentLight: rgb(227, 211, 167);
+    --accentBlue: rgb(91, 110, 146);
 }
 
 html, body{
@@ -39,7 +39,7 @@ input[type="range" i]{
     width: 100%;
     min-width: 100%;
     align-self: center;
-    background-image: linear-gradient(rgb(0, 213, 255), rgb(0, 213, 255));
+    background-image: linear-gradient(rgb(143, 167, 211), var(--accentBlue));
     background-size: 70% 100%;
     background-repeat: no-repeat;
 }

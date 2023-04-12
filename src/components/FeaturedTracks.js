@@ -31,7 +31,7 @@ export default function FeaturedTracks ({tracks, loading, artistData}){
     
     useEffect(()=>{
         setFeaturedTrack(tracks[index])
-        if(index >9){
+        if(index >tracks.length -1){
             setIndex(0)
         }
         const interval = setTimeout(()=>{
