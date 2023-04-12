@@ -12,7 +12,8 @@
   /* overflow-x: hidden; */
   /* overflow-y: scroll; */
   /* background: linear-gradient(to bottom, rgb(0, 0, 0) 10%, transparent 90%); */
-  background-color: black;
+  /* background-color: black; */
+  background-color: #0f0f0f;
   /* background: rgba(0, 0, 0, 0.422); */
   background-repeat: no-repeat;
   background-position: center;

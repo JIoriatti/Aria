@@ -1,12 +1,12 @@
 .leftArrow{
     left: 0;
-    background: linear-gradient(to right,black, 75%, transparent); 
+    background: linear-gradient(to right,#0f0f0f, 75%, transparent); 
 }
 .leftArrowImage{
     background: url('../../public/arrow-left-4-svgrepo-com.png');
 }
 .rightArrow{
-    background: linear-gradient(to left,black, 75%, transparent);
+    background: linear-gradient(to left,#0f0f0f, 75%, transparent);
 }
 .rightArrowImage{
     background: url('../../public/arrow-left-4-svgrepo-com.png');
