@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import styles from './FeaturedTracks.module.css'
 import { useStateContext, useDispatchContext } from 'utils/ReducerContext';
 import PlayButton from './PlayButton';
@@ -14,6 +14,7 @@ export default function FeaturedTracks ({tracks, loading, artistData}){
     const controls = useAnimationControls();
     const controlsRef = useRef(controls);
     const intervalRef = useRef(0);
+    const [index, setIndex] = useState(0);
     
 
     const parseDuration = (timeInMs)=>{
@@ -29,28 +30,25 @@ export default function FeaturedTracks ({tracks, loading, artistData}){
 
     
     useEffect(()=>{
-        controlsRef.current.start({opacity: 1, scale: 1, translateY: 1, originY: 0})
-        const interval = setInterval(()=>{
-            intervalRef.current +=1
-            if(intervalRef.current > 9){
-                intervalRef.current =  0
-            }
-            setFeaturedTrack(tracks[intervalRef.current])
-            controlsRef.current.set({opacity: 0, scale: 0.9, translateY: 0.9, originY: 0})
-            controlsRef.current.start({opacity: 1, scale: 1, translateY: 1, originY: 0})
-            
-            
-
+        setFeaturedTrack(tracks[index])
+        if(index >9){
+            setIndex(0)
+        }
+        const interval = setTimeout(()=>{
+            setIndex((prevIndex)=> prevIndex+=1)
         },8000)
-        
-        return () => clearInterval(interval);
+        controlsRef.current.set({opacity: 0, scale: 0.9, translateY: 0.9, originY: 0})
+        controlsRef.current.start({opacity: 1, scale: 1, translateY: 1, originY: 0})
 
-    },[])
+        return () => {
+            clearTimeout(interval);
+        }
+    },[index])
 
 
     useEffect(()=>{
         if(!loading && tracks){
-            setFeaturedTrack(tracks[intervalRef.current])
+            setFeaturedTrack(tracks[index])
         }
     },[])
     if (!loading) {
@@ -98,7 +96,7 @@ export default function FeaturedTracks ({tracks, loading, artistData}){
                             </div>
                         </motion.div>
                     </AnimatePresence>
-                    <IntervalTrack tracks={tracks} intervalRef={intervalRef} />
+                    <IntervalTrack tracks={tracks} index={index} setIndex={setIndex} />
                 </div>
             </div>
         )
