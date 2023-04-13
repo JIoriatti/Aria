@@ -5,6 +5,7 @@ import Image from 'next/image';
 import {motion, AnimatePresence} from 'framer-motion'
 import { ACTIONS } from 'utils/actions';
 import HeroTrack from './HeroTrack';
+import { useSongDispatchContext, useSongStateContext } from 'utils/SongContext';
 
 const V_STEP = 0.12
 const V_STEPQUICK= 0.030
@@ -23,6 +24,8 @@ export default function Hero({font, artistData, videoRef}){
     const [once, setOnce] = useState(true);
     const state = useStateContext();
     const dispatch = useDispatchContext();
+    const songState = useSongStateContext();
+    const songDispatch = useSongDispatchContext();
     // const videoRef = useRef();
     
     const handleReplay = ()=>{
@@ -108,6 +111,7 @@ export default function Hero({font, artistData, videoRef}){
                         videoRef.current.play();
                     }}
                     onPlay={()=>{
+                        songDispatch({type: ACTIONS.IS_TIMER_HIT, payload: true})
                         setOnce(true)
                         videoRef.current.volume = MIN;
                         const fadeIn = setInterval(() => {

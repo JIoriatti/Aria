@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useStateContext } from 'utils/ReducerContext'
 import { useSongStateContext } from 'utils/SongContext';
 
+
 export default function SideBar({font}){
     const state = useStateContext();
     const [isHovered, setIsHovered] = useState(false);
@@ -28,7 +29,8 @@ export default function SideBar({font}){
                     >
                     </motion.div>
                     <div className={styles.iconContainer}>
-                        <div className={styles.itemWrapper}>
+                        <div 
+                            className={styles.itemWrapper}>
                             <div 
                                 className={styles.icon}
                             >
@@ -38,6 +40,7 @@ export default function SideBar({font}){
                                     className={styles.iconImage}
                                 />
                             </div>
+                            <span className={styles.seperator}></span>
                             <div className={styles.text}>Favorites</div>
                         </div>
                         <div className={styles.itemWrapper}>
@@ -46,6 +49,7 @@ export default function SideBar({font}){
                             >
                                 <img src="/eye.png" alt="History" className={styles.iconImage}/>
                             </div>
+                            <span className={styles.seperator}></span>
                             <div className={styles.text}>Recently Viewed Artists</div>
                         </div>
                         <div className={styles.itemWrapper}>
@@ -54,6 +58,7 @@ export default function SideBar({font}){
                             >
                                 <img src="/song-history.png" alt="History" className={styles.iconImage}/>
                             </div>
+                            <span className={styles.seperator}></span>
                             <div className={styles.text}>History</div>
                         </div>
                     </div>
