@@ -26,6 +26,7 @@ export default function SongPlayerBar({font}){
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                     >
+                        
                         {/* <div className={styles.infoContainer}> */}
                             {/* <div className={styles.artistInfo}>
                                 <div

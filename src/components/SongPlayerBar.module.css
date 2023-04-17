@@ -8,6 +8,8 @@
     z-index: 10000;
     background-color: var(--themeColorDark);
     background: linear-gradient(to top, var(--themeColorDark) 20%, var(--themeColorLight));
+
+    box-shadow: 0px -5px 5px -5px var(--themeColorLight);
 }
 /* .infoContainer{
     display: flex;

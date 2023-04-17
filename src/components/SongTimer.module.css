@@ -19,30 +19,80 @@
     height: max-content;
     min-width: 50px;
     max-width: 50px;
-    align-self: center;
+    align-self: flex-end;
     /* margin: 0 1em 0 1em; */
-    padding: 1em;
+    padding: 1em 1em 0.5em 1em;
 }
 .middleWrapper{
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: space-between;
     width: 30%;
-    padding: 0.5em;
+    padding: 0 0.5em 0.5em 0.5em;
+}
+.controlsContainer{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 40px;
+    margin-top: 5px;
+    /* background-color: gray; */
+}
+.controls{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    min-width: 150px;
+}
+.play,.previous,.next{
+    background: var(--themeColorLight);
+    border-radius: 50%;
+    box-shadow: 0 0 5px 0 rgba(56, 56, 56, 0.835);
+    box-shadow: inset 0 0 10px 0 rgba(56, 56, 56, 0.835);
+    image-rendering: crisp-edges;
+    padding: 3px;
+    cursor: pointer;
+
+    transition: all 0.1s ease;
+}
+.play:hover,.previous:hover,.next:hover{
+    background-color: rgb(74, 74, 74);
+    box-shadow: 0 0 20px 0 rgba(182, 182, 182, 0.835);;
+}
+.play{
+    box-sizing: border-box;
+    height: 40px;
+    width: 40px;
+    padding-left: 6px;
+}
+.previous,.next{
+    padding: 6px;
+    height: 22px;
+    width: 22px;
+}
+.next{
+    rotate: 180deg;
 }
 .infoContainer{
+    position: absolute;
+    left: 75px;
     display: flex;
     justify-content: flex-start;
     margin-top: 0.5em;
     color: white;
     font-size: 15px;
-    
     /* word-wrap: break-word; */
     overflow: hidden;
     /* text-overflow: ellipsis; */
 }
 .songNameArtistName{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
     white-space: nowrap;
+    margin-left: 1em;
+    max-width: 300px;
     /* word-wrap: break-word; */
 }
 

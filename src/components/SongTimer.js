@@ -3,6 +3,7 @@ import styles from './SongTimer.module.css'
 import { useStateContext, useDispatchContext } from 'utils/ReducerContext';
 import { useSongDispatchContext, useSongStateContext } from 'utils/SongContext';
 import Image from 'next/image';
+import { motion, useAnimationControls } from 'framer-motion';
 
 
 //FIX -- song timer/ progress bar re-rendering due to state changes from
@@ -21,6 +22,8 @@ export default function SongTimer() {
     const songState = useSongStateContext();
     const songDispatch = useSongDispatchContext();
 
+    const controls = useAnimationControls();
+
     const parseTime = (time) => {
         const seconds = String(Math.floor(time % 60) || 0).padStart('2', '0');
         const minutes = String(Math.floor(time / 60) || 0).padStart('2', '0');
@@ -29,49 +32,71 @@ export default function SongTimer() {
         return `${minutes}:${seconds}`
     }
 
-    // useEffect(()=>{
-    //     if(state.currentSong.currentTime){
-    //         songTimeRef.current = Math.trunc(state.currentSong.currentTime);
-    //     }
-    // },[state.currentSong.currentTime])
+    useEffect(()=>{
+        controls.set({opacity: 0});
+        controls.start({opacity: 1});
+    },[songState.currentSong])
     return (
-        <div className={styles.container}>
-            <div className={styles.imageWrapper}>
-                <Image
-                    src={songState.backgroundImage}
-                    alt="thumbnail of current track"
-                    height={55}
-                    width={55}
-                />
-            </div>
-            <div className={styles.timer}>
-                {/* {parseTime(Math.trunc(songState?.currentSong?.currentTime))} */}
-                {parseTime(Math.trunc(songState?.songTime))}
-                {/* {parseTime(songTimeRef.current)} */}
-            </div>
-            <div className={styles.middleWrapper}>
-                <input
-                    type="range"
-                    ref={progressBarRef}
-                    className={styles.progressBar}
-                    style={{backgroundSize: (Math.trunc(songState?.songTime)) * 100 / (Math.trunc(songState?.songDuration)) + '% 100%'}}
-                    // style={{backgroundSize: (songTimeRef.current * 100) / (Math.trunc(state?.currentSong.duration)) + '% 100%'}}
-                    min='0'
-                    step='1'
-                    max={`${songState?.songDuration}`}
-                    // onChange={(e)=>{
-                    //     dispatch({type: ACTIONS.SET_SONG_TIME, payload: state.songDuration * (e.offsetX/progressBarRef.clientWidth)})
-                    // }}
-                />
-            <div className={styles.infoContainer}>
-                <div className={styles.songNameArtistName}>
-                    {songState.artistName + ' - ' + songState.songName }
+        <>
+            <div className={styles.container}>
+                <motion.div 
+                    className={styles.infoContainer}
+                    animate={controls}
+                    transition={{duration: 0.3}}
+                >
+                    <div className={styles.imageWrapper}>
+                        <Image
+                            src={songState.backgroundImage}
+                            alt="thumbnail of current track"
+                            height={55}
+                            width={55}
+                        />
+                    </div>
+                    <div className={styles.songNameArtistName}>
+                        {songState.artistName + ' - ' + songState.songName }
+                    </div>
+                </motion.div>
+                <div className={styles.timer}>
+                    {parseTime(Math.trunc(songState?.songTime))}
+                </div>
+                <div className={styles.middleWrapper}>
+                    <div className={styles.controlsContainer}>
+                        <div className={styles.controls}>
+                            <img 
+                                className={styles.previous}
+                                src={'/nextWhite.png'}
+                                alt='previous song'
+                            />
+                            <img 
+                                className={styles.play}
+                                src={'/playWhite.png'}
+                                alt='previous song'
+                            />
+                            <img 
+                                className={styles.next}
+                                src={'/nextWhite.png'}
+                                alt='next song'
+                            />
+                        </div>
+                    </div>
+                    <input
+                        type="range"
+                        ref={progressBarRef}
+                        className={styles.progressBar}
+                        style={{backgroundSize: (Math.trunc(songState?.songTime)) * 100 / (Math.trunc(songState?.songDuration)) + '% 100%'}}
+                        // style={{backgroundSize: (songTimeRef.current * 100) / (Math.trunc(state?.currentSong.duration)) + '% 100%'}}
+                        min='0'
+                        step='1'
+                        max={`${songState?.songDuration}`}
+                        // onChange={(e)=>{
+                        //     dispatch({type: ACTIONS.SET_SONG_TIME, payload: state.songDuration * (e.offsetX/progressBarRef.clientWidth)})
+                        // }}
+                    />
+                </div>
+                <div className={styles.timer}>
+                    {parseTime(songState?.songDuration)}
                 </div>
             </div>
-            </div>
-            <div className={styles.timer}>
-                {parseTime(songState?.songDuration)}
-            </div>
-        </div>
+        </>
     )
 }

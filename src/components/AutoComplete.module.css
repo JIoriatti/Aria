@@ -6,8 +6,8 @@
     height: 40px;
     width: calc(100% + 3px);
     border-radius: unset;
-    background: linear-gradient(to top, rgba(255, 255, 255, 0.117) 10%, rgb(0, 0, 0) 90%);
-    border-radius: 0 0 5px 5px;
+    background: linear-gradient(to top, var(--themeColorLight) 10%, var(--themeColorDark) 90%);
+    border-radius: 0 0 5px 2px;
 }
 .result{
     all: unset;
