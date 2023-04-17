@@ -1,5 +1,5 @@
 {
-  "name": "next-golf-app",
+  "name": "aria-music-app",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,7 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@next-auth/prisma-adapter": "^1.0.5",
     "@next/font": "13.2.4",
+    "@prisma/client": "^4.12.0",
     "eslint": "8.36.0",
     "eslint-config-next": "13.2.4",
     "framer-motion": "^10.9.1",
@@ -17,5 +19,8 @@
     "next-auth": "^4.22.0",
     "react": "18.2.0",
     "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "prisma": "^4.12.0"
   }
 }
