@@ -15,7 +15,6 @@ export default function SideBar({font}){
                 className={styles.container + ' ' + font}
                 layout={true}
                 style={{boxShadow: state.scrollYPosition !=0 ? ' 8px 8px 5px -5px var(--themeColorLight)' : 'none'}}
-                // style={{height: songState.isTimerHit ? '100%' : 'calc(100% - 151px)'}}
                 animate={{width: (isHovered && state.scrollYPosition !=0)? 300 : 75, originX: 0, height: songState.isTimerHit ? '100%' : 'calc(100% - 151px)', translateX: state.scrollYPosition !=0 ? 0 : -100}}
                 transition={{width: {duration: 0.2, delay: isHovered ? 0.4 : 0}, height:{duration: 0.2, delay: songState.isTimerHit ? 0.1 : 0}, translateX:{duration: 0.2, delay: 0.8}}}
                 onMouseEnter={()=>setIsHovered(true)}

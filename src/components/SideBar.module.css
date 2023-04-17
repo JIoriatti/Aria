@@ -80,8 +80,8 @@
     margin-left: 1em;
 }
 .iconImage{
-    height: 80%;
-    width: 80%;
+    height: 60%;
+    width: 60%;
     filter: contrast(0) brightness(300%);
 }
 .text{
