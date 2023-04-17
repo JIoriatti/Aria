@@ -4,11 +4,14 @@ import SearchBar from './SearchBar'
 import { useStateContext, useDispatchContext } from "utils/ReducerContext"
 import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect } from 'react'
+import { useSession, signIn, signOut } from 'next-auth/react'
+import ProfileButton from './ProfileButton'
 
 
 export default function DynamicHeader({ font, artistData }) {
     const state = useStateContext();
     const dispatch = useDispatchContext();
+    const { data: session } = useSession();
 
     return (
         <div
@@ -27,8 +30,15 @@ export default function DynamicHeader({ font, artistData }) {
                     
                     >
                 </motion.div>
-
-
+                <div className={styles.profileContainer}>
+                    {session && <ProfileButton />}
+                    {!session && 
+                        <div
+                            className={styles.signInOut}
+                            onClick={()=>signIn()}
+                        >Sign In</div>
+                    }
+                </div>
                 {/* <ProfileButton /> */}
                 <div
                     className={styles.centeringWrapper}

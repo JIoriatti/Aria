@@ -45,70 +45,73 @@ export default function SearchBar () {
 
     return( 
         <>
-            <AnimatePresence>
-                {state.isSearchExpanded && 
-                    <motion.div 
-                    className={styles.searchWrapper}
-                    initial={{scaleX: 0, originX: 1}}
-                    animate={{scaleX: 1, originX: 1}}
-                    transition={{duration: 0.2}}
-                    >
-                        <input
-                            type="search"
-                            id='searchInput'
-                            className={styles.searchInput}
-                            placeholder='Search Artists'
-                            autoFocus={true}
-                            autoComplete='off'
-                            onBlur={()=> {
-                                if(!state.searchInput){
-                                    dispatch({type: ACTIONS.IS_SEARCH_EXPANDED})
-                                    dispatch({type: ACTIONS.SEARCH_INPUT, payload: ''})
-                                    dispatch({type: ACTIONS.IS_NO_SEARCH_RESULT, payload: false})
-                                }
-                            }}
-                            onKeyDown={(e) => {
-                                if (e.key === 'Escape') {
-                                    e.preventDefault();
-                                }
-                            }}
-                            onKeyUp={(e)=>{
-                                if(e.key === 'Enter'){
-                                    console.log('working')
-                                    if(searchResultsRef.current){
-                                        document.location.replace(`/artists?name=${artistInfo.name}`)
+            <div className={styles.container}>
+                <AnimatePresence>
+                    {state.isSearchExpanded && 
+                        <motion.div 
+                        className={styles.searchWrapper}
+                        initial={{scaleX: 0, originX: 1}}
+                        animate={{scaleX: 1, originX: 1}}
+                        transition={{duration: 0.2}}
+                        >
+                            <input
+                                type="search"
+                                id='searchInput'
+                                className={styles.searchInput}
+                                placeholder='Search Artists'
+                                autoFocus={true}
+                                autoComplete='off'
+                                onBlur={()=> {
+                                    if(!state.searchInput){
+                                        dispatch({type: ACTIONS.IS_SEARCH_EXPANDED})
+                                        dispatch({type: ACTIONS.SEARCH_INPUT, payload: ''})
+                                        dispatch({type: ACTIONS.IS_NO_SEARCH_RESULT, payload: false})
                                     }
-                                }
-                            }}
-                            onChange={(e) => {
-                                dispatch({type: ACTIONS.SEARCH_INPUT, payload: e.target.value})
-                            }}
-                            value={state.searchInput}
-                        />
+                                }}
+                                onKeyDown={(e) => {
+                                    if (e.key === 'Escape') {
+                                        e.preventDefault();
+                                    }
+                                }}
+                                onKeyUp={(e)=>{
+                                    if(e.key === 'Enter'){
+                                        console.log('working')
+                                        if(searchResultsRef.current){
+                                            document.location.replace(`/artists?name=${artistInfo.name}`)
+                                        }
+                                    }
+                                }}
+                                onChange={(e) => {
+                                    dispatch({type: ACTIONS.SEARCH_INPUT, payload: e.target.value})
+                                }}
+                                value={state.searchInput}
+                            />
+                            <div
+                                className={styles.searchBarIcon2}
+                            >
+                            </div>
+                            <AutoComplete artistInfo={artistInfo} searchResultsRef={searchResultsRef}/>
+                        </motion.div>
+                    }
+                
+                {!state.isSearchExpanded && 
+                    <button
+                        className={styles.searchBarIconContainer}
+                        title='Search'
+                        type='submit'
+                        onClick={()=> 
+                            dispatch({type: ACTIONS.IS_SEARCH_EXPANDED})
+                        }
+                    >
                         <div
-                            className={styles.searchBarIcon2}
+                            className={styles.searchBarIcon}
                         >
                         </div>
-                        <AutoComplete artistInfo={artistInfo} searchResultsRef={searchResultsRef}/>
-                    </motion.div>
+                    </button>
                 }
-            
-            {!state.isSearchExpanded && 
-                <button
-                    className={styles.searchBarIconContainer}
-                    title='Search'
-                    type='submit'
-                    onClick={()=> 
-                        dispatch({type: ACTIONS.IS_SEARCH_EXPANDED})
-                    }
-                >
-                    <div
-                        className={styles.searchBarIcon}
-                    >
-                    </div>
-                </button>
-            }
-            </AnimatePresence>
+                </AnimatePresence>
+
+            </div>
         </>    
     )
 }

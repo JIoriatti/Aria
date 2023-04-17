@@ -112,7 +112,18 @@ z-index: 100;
     background-color: white;
 }
 
+.profileContainer{
+    display: flex;
+    align-items: center;
+    width: max-content;
+    justify-content: space-between;
+    order: 5;
+}
 
+.signInOut{
+    color: white;
+    cursor: pointer;
+}
 
 @media (max-width: 666px){
     .dynamicHeader{

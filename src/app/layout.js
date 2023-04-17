@@ -9,10 +9,11 @@ import { AnimatePresence } from 'framer-motion'
 import { useStateContext, useDispatchContext } from 'utils/ReducerContext'
 import { useState, useEffect } from 'react'
 import SideBar from '@/components/SideBar'
+import { SessionProvider } from 'next-auth/react'
 
 const font = League_Spartan({ subsets: ['latin'] })
 
-export default function RootLayout({ children }) {
+export default function RootLayout({ children, session }) {
   const state = useStateContext();
   const dispatch = useDispatchContext();
 
@@ -27,15 +28,15 @@ export default function RootLayout({ children }) {
       */}
       <head />
       <body>
-      <SongProvider>
-        <ReducerProvider >
-          <SideBar font={font.className}/>
-          {/* <SongProvider> */}
-            {children}
-          {/* </SongProvider> */}
-        </ReducerProvider>
-        <SongPlayerBar font={font.className}/>
-      </SongProvider>
+        <SessionProvider session={session}>
+          <SongProvider>
+            <ReducerProvider >
+              <SideBar font={font.className}/>
+                {children}
+            </ReducerProvider>
+            <SongPlayerBar font={font.className}/>
+          </SongProvider>
+        </SessionProvider>
       </body>
     </html>
   )

@@ -1,3 +1,11 @@
+.container{
+    display: flex;
+    position: absolute;
+    right: 135px;
+    align-self: center;
+    align-items: center;
+    width: fit-content;
+}
 .searchInput::-webkit-search-cancel-button{
     -webkit-appearance: none;
     height: 23px;
@@ -23,15 +31,12 @@
     outline: unset;
 }
 .searchWrapper{
-    /* position: absolute;
-    right: 0;
-    top: 0; */
     background-color: black;
     width: 225px;
     display: flex;
     flex-direction: row-reverse;
     height: 2em;
-    margin: 1em 1em 0 0;
+    margin: 0 1em 0 0;
     position: relative;
     /* justify-content: center; */
     padding: 0;
