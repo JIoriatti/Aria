@@ -241,6 +241,18 @@ export default function Carosel({setTimerHit, data, loading, videoRef}){
         
     },[])
 
+    //for checking if songState.isSongPlaying is set to false, also set state.isSongPlaying to false
+    //had to implement this since songPlayerBar is seperated from global state to avoid
+    //re-renders on every state change
+    useEffect(()=>{
+        if(songState.isSongPlaying === false){
+            dispatch({type: ACTIONS.SET_IS_SONG_PLAYING, payload: false})
+        }
+        if(songState.isSongPlaying === true){
+            dispatch({type: ACTIONS.SET_IS_SONG_PLAYING, payload: true})
+        }
+    },[songState.isSongPlaying])
+
     if (!loading) {
         return (
             <>
