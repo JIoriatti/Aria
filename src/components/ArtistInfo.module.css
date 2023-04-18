@@ -9,6 +9,7 @@
     font-size: 80px;
     align-self: center;
     color: white;
+    padding-right: 150px;
 }
 .infoWrapper{
     display: flex;
