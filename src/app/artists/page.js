@@ -66,7 +66,6 @@ export default function ArtistLandingPage() {
 
         return ()=> clearInterval(timer);
     }
-    console.log(songState)
   },[songState.hasSongEnded])
 
 useEffect(()=>{
