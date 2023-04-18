@@ -7,6 +7,7 @@ import { useStateContext, useDispatchContext } from 'utils/ReducerContext'
 import { ACTIONS } from 'utils/actions'
 import Arrow from './Arrow'
 import { useSongDispatchContext, useSongStateContext } from 'utils/SongContext'
+import { useSession } from 'next-auth/react'
 
 const V_STEP = 0.06
 const MAX = 0.5
@@ -27,6 +28,7 @@ export default function Carosel({setTimerHit, data, loading, videoRef}){
     const songContainer = useRef();
     const imageRefs = useRef([]);
     
+    const { data: session } = useSession();
 
     const createSong = (mp3)=>{
         const newAudio = new Audio(mp3);
@@ -91,7 +93,7 @@ export default function Carosel({setTimerHit, data, loading, videoRef}){
                 }
             }
             newSong.addEventListener('timeupdate', handleFadeOut)
-            
+
             newSong.addEventListener('play', () => {
                 songDispatch({type: ACTIONS.HAS_SONG_ENDED, payload: false})
                 songDispatch({type: ACTIONS.IS_TIMER_HIT, payload: false})
@@ -206,7 +208,33 @@ export default function Carosel({setTimerHit, data, loading, videoRef}){
     },[])
 
 
+    const handleFavoriteClick = async(e)=>{
+        let artists = [];
+        let songInfo = data.find((song)=>{
+            return song.name === e.target.dataset.name
+        })
+        if(songInfo.hasOwnProperty('tracks')){
+            songInfo = {...songInfo, preview_url: songInfo.tracks.items[0].preview_url}
+        }
+        songInfo.artists.forEach((artist)=>{
+            artists.push(artist.name)
+        })
+        songInfo = {...songInfo, artistsNames: artists}
+        console.log(songInfo)
+        console.log(songInfo.id)
+        console.log(session.user.id)
+        await fetch('/api/favorite',{
+            method: 'POST',
+            body: JSON.stringify({
+                userId: session.user.id,
+                songInfo,
+            })
+        })
+    }
+
+
     useEffect(()=>{
+            console.log(session)
             const songContainerRef = songContainer.current;
             songContainer.current.addEventListener('scroll', checkIfInView)
             return () => songContainerRef.removeEventListener('scroll', checkIfInView)
@@ -409,6 +437,8 @@ export default function Carosel({setTimerHit, data, loading, videoRef}){
                                                             ></div>
                                                             <div
                                                                 className={styles.heart}
+                                                                data-name={album.name}
+                                                                onClick={handleFavoriteClick}
                                                             ></div>
                                                         </div>
 
