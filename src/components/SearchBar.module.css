@@ -31,7 +31,7 @@
     outline: unset;
 }
 .searchWrapper{
-    background-color: black;
+    background-color: var(--themeColorDark);
     width: 225px;
     display: flex;
     flex-direction: row-reverse;
