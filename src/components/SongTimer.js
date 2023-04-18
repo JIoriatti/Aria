@@ -4,6 +4,7 @@ import { useStateContext, useDispatchContext } from 'utils/ReducerContext';
 import { useSongDispatchContext, useSongStateContext } from 'utils/SongContext';
 import Image from 'next/image';
 import { motion, useAnimationControls } from 'framer-motion';
+import { ACTIONS } from 'utils/actions';
 
 
 //FIX -- song timer/ progress bar re-rendering due to state changes from
@@ -36,6 +37,7 @@ export default function SongTimer() {
         controls.set({opacity: 0});
         controls.start({opacity: 1});
     },[songState.currentSong])
+
     return (
         <>
             <div className={styles.container}>
@@ -67,11 +69,33 @@ export default function SongTimer() {
                                 src={'/nextWhite.png'}
                                 alt='previous song'
                             />
-                            <img 
-                                className={styles.play}
-                                src={'/playWhite.png'}
-                                alt='previous song'
-                            />
+                                {songState.isSongPlaying ? 
+                                    <div 
+                                        className={styles.pause}
+                                        onClick={()=> {
+                                            songDispatch({type: ACTIONS.SET_IS_SONG_PLAYING, payload: false})
+                                            songState.currentSong.pause();
+                                        }}
+                                    >
+                                            <motion.div 
+                                                className={styles.pauseImage}
+                                                alt='pause song'
+                                            ></motion.div>
+                                    </div>
+                                    :
+                                    <div 
+                                        className={styles.play}
+                                        onClick={()=> {
+                                            songDispatch({type: ACTIONS.SET_IS_SONG_PLAYING, payload: true})
+                                            songState.currentSong.play();
+                                        }}
+                                    >
+                                        <motion.div
+                                            className={styles.playImage}
+                                            alt='resume song'
+                                        ></motion.div>
+                                    </div>
+                                }
                             <img 
                                 className={styles.next}
                                 src={'/nextWhite.png'}

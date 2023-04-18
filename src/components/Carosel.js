@@ -73,6 +73,9 @@ export default function Carosel({setTimerHit, data, loading, videoRef}){
         }
         if (!state.currentSong || e.target.dataset.mp3 !== state?.selectedMp3) {
             state?.currentSong?.pause();
+            dispatch({ type: ACTIONS.SET_SONG_TIME, payload: 0})
+            songDispatch({type: ACTIONS.SET_SONG_TIME, payload: 0})
+
             const newSong = createSong(e.target.dataset.mp3);
             newSong.preload = 'metadata'
             newSong.onloadedmetadata = function () {
@@ -88,13 +91,10 @@ export default function Carosel({setTimerHit, data, loading, videoRef}){
                 }
             }
             newSong.addEventListener('timeupdate', handleFadeOut)
-
+            
             newSong.addEventListener('play', () => {
                 songDispatch({type: ACTIONS.HAS_SONG_ENDED, payload: false})
                 songDispatch({type: ACTIONS.IS_TIMER_HIT, payload: false})
-
-                dispatch({ type: ACTIONS.SET_SONG_TIME, payload: 0})
-                songDispatch({type: ACTIONS.SET_SONG_TIME, payload: 0})
 
                 newSong._updateInterval = setInterval(() => {
                     dispatch({ type: ACTIONS.SET_SONG_TIME, payload: newSong.currentTime + 1 })
@@ -104,10 +104,9 @@ export default function Carosel({setTimerHit, data, loading, videoRef}){
               
             newSong.addEventListener('pause', () => clearInterval(newSong._updateInterval), true)
 
-           
-
             newSong.onended = function () {
                 dispatch({ type: ACTIONS.SET_IS_SONG_PLAYING, payload: false })
+                songDispatch({ type: ACTIONS.SET_IS_SONG_PLAYING, payload: false })
                 songDispatch({type: ACTIONS.HAS_SONG_ENDED, payload: true})
                 dispatch({ type: ACTIONS.SET_SELECTED_MP3, payload: null})
                 //temporary -- change back to 0 when re-rendering is fixed
@@ -145,9 +144,11 @@ export default function Carosel({setTimerHit, data, loading, videoRef}){
 
         if (state.isSongPlaying && e.target.dataset.mp3 === state.selectedMp3) {
             dispatch({ type: ACTIONS.SET_IS_SONG_PLAYING, payload: false })
+            songDispatch({ type: ACTIONS.SET_IS_SONG_PLAYING, payload: false })
         }
         if (!state.isSongPlaying) {
             dispatch({ type: ACTIONS.SET_IS_SONG_PLAYING, payload: true })
+            songDispatch({ type: ACTIONS.SET_IS_SONG_PLAYING, payload: true })
         }
     }
 

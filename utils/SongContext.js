@@ -27,6 +27,7 @@ export default function SongProvider({children}){
         isImageClicked: false,
         isTimerHit: true,
         hasSongEnded: false,
+        isSongPlaying: false,
     })
     return (
         <div>
