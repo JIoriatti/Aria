@@ -34,6 +34,7 @@ export default function ReducerProvider ({children}){
         isSearchExpanded: false,
         searchInput: '',
         isNoSearchResult: false,
+        interval: null,
     });
 
 return (

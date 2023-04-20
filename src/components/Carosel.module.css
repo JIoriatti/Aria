@@ -34,7 +34,7 @@
     width: 100%;
     max-height: 300px;
     margin-top: 0em;
-    background: radial-gradient(circle, var(--themeColorLight), var(--themeColorDark));
+    background: radial-gradient(circle, transparent, var(--themeColorDark)80%);
 }
 .container{
     display: flex;

@@ -167,9 +167,9 @@ return (
                 animate={{opacity: 1}}
                 exit={{opacity: 1}}
               >
-                <Carosel setTimerHit={setTimerHit} data={topTracks} loading={loading} videoRef={videoRef}/>
-                <Carosel setTimerHit={setTimerHit} data={albums} loading={loading} videoRef={videoRef}/>
-                <Carosel setTimerHit={setTimerHit} data={singles} loading={loading} videoRef={videoRef}/>
+                <Carosel setTimerHit={setTimerHit} data={topTracks} loading={loading} videoRef={videoRef} mainRef={mainRef}/>
+                <Carosel setTimerHit={setTimerHit} data={albums} loading={loading} videoRef={videoRef} mainRef={mainRef}/>
+                <Carosel setTimerHit={setTimerHit} data={singles} loading={loading} videoRef={videoRef} mainRef={mainRef}/>
                 <ArtistInfo artistData={artistData} loading={loading}/>
               </motion.div>
             }

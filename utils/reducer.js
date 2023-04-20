@@ -46,6 +46,8 @@ export const reducer = (state, action)=>{
             return {...state, isTimerHit: action.payload}
         case ACTIONS.HAS_SONG_ENDED:
             return {...state, hasSongEnded: action.payload}
+        case ACTIONS.SET_INTERVAL:
+            return {...state, interval: action.payload}
         default:
             throw new Error();
     }

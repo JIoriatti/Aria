@@ -8,6 +8,7 @@ import { ACTIONS } from 'utils/actions'
 import Arrow from './Arrow'
 import { useSongDispatchContext, useSongStateContext } from 'utils/SongContext'
 import { useSession } from 'next-auth/react'
+import { colorScheme, setBackgroundGradient } from 'utils/colorScheme'
 
 const V_STEP = 0.06
 const MAX = 0.5
@@ -17,7 +18,7 @@ const SHORT_DUR = 1000 //1000
 const LONG_DUR = 2000   //2000
 const DUR_THRESHOLD = 0.95
 
-export default function Carosel({setTimerHit, data, loading, videoRef}){
+export default function Carosel({setTimerHit, data, loading, videoRef, mainRef}){
     const [isRowHovered, setIsRowHovered] = useState(false);
     const state = useStateContext();
     const dispatch = useDispatchContext();
@@ -166,14 +167,17 @@ export default function Carosel({setTimerHit, data, loading, videoRef}){
             // dispatch({type: ACTIONS.IS_HERO_MUTED, payload: true})
             handleImageClickState(e);
             setTimerHit(false)
-            handleSongChange(e);   
+            handleSongChange(e);
+            colorScheme(e.target.dataset.image, mainRef.current, dispatch) 
         }
     }
+
     const createImageRefs = useCallback((image)=>{
         if(image && !imageRefs.current.includes(image)){
             imageRefs.current.push(image);
         }
     },[])
+
     const checkIfInView = useCallback(()=>{
         imageRefs.current.forEach((image)=>{
             let rect = image.getBoundingClientRect();
@@ -234,12 +238,18 @@ export default function Carosel({setTimerHit, data, loading, videoRef}){
 
 
     useEffect(()=>{
-            console.log(session)
             const songContainerRef = songContainer.current;
             songContainer.current.addEventListener('scroll', checkIfInView)
+
             return () => songContainerRef.removeEventListener('scroll', checkIfInView)
-        
     },[])
+
+    //Clear background color animation interval when a new song is clicked
+    useEffect(()=>{
+        if(state.interval){
+            return () => clearInterval(state.interval)
+        }
+    },[state.interval])
 
     //for checking if songState.isSongPlaying is set to false, also set state.isSongPlaying to false
     //had to implement this since songPlayerBar is seperated from global state to avoid
