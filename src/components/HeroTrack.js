@@ -2,6 +2,7 @@ import styles from './HeroTrack.module.css'
 import { AnimatePresence, motion } from 'framer-motion'
 import AnimatedIcon from './AnimatedIcon'
 
+
 export default function HeroTrack ({font, track, trackDetails, isHeroPlaying, isAudioOnly}){
     return (
         <>

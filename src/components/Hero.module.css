@@ -22,7 +22,7 @@
     left: 0;
     height: 20%;
     width: 100%;
-    background-image: linear-gradient(to top, var(--themeColorDark) 10%, transparent 90%);
+    background-image: linear-gradient(to top, var(--themeColorDark) 20%, transparent 80%);
     background-repeat: no-repeat;
     /* background-color: black; */
     z-index: 10;

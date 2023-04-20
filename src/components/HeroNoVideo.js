@@ -163,7 +163,7 @@ export default function HeroNoVideo ({font, artistData}){
                 {artistData?.artistInfo?.name}
             </motion.h1>
             <HeroTrack font={font} track={artistData?.albums[8]} trackDetails={artistData?.tracks[8].tracks.items[0]} isHeroPlaying={isHeroPlaying.current} isAudioOnly={true}/>
-            <div className={styles.heroImageFade}></div>
+            <div id='heroImageFade' className={styles.heroImageFade}></div>
             <div className={styles.fadeToBlack}></div>
 
             {!state.isSongPlaying &&
