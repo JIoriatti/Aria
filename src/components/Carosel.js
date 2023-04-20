@@ -247,6 +247,7 @@ export default function Carosel({setTimerHit, data, loading, videoRef, mainRef})
     //Clear background color animation interval when a new song is clicked
     useEffect(()=>{
         if(state.interval){
+            console.log('interval cleared from useEffect')
             return () => clearInterval(state.interval)
         }
     },[state.interval])

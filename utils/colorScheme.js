@@ -23,12 +23,14 @@ export const colorScheme =(imageSrc, mainRef, dispatch)=>{
             )
             const edges = getEdges();
             const allPixels = getAllPixels();
-        
+            console.log(allPixels)
+            // console.log(getAverageColor(allPixels))
             setBackgroundGradient(
                 getAverageColor(edges.top), 
                 getAverageColor(edges.bottom),
                 getAverageColor(edges.left),
                 getAverageColor(edges.right),
+                getAverageColor(allPixels)
             );
         }
     }
@@ -38,7 +40,7 @@ export const colorScheme =(imageSrc, mainRef, dispatch)=>{
         const numberOfRows = (imageDataArray.data.length)/rowLength
         let allPixels =[];
         for(let r=0; r<numberOfRows; r++){
-            for(let c = r * rowLength; c < rowLength; c+=4){
+            for(let c = r * rowLength; c < (r * rowLength) + rowLength; c+=4){
                 allPixels.push({
                     red: imageDataArray.data[c],
                     green: imageDataArray.data[c + 1],
@@ -129,24 +131,55 @@ export const colorScheme =(imageSrc, mainRef, dispatch)=>{
         let b=0;
         let a=0;
         let total=0;
+        // let sortedColorsForMax = {
+        //     r:[],
+        //     g:[],
+        //     b:[],
+        // };
         edge.forEach((pixel,i)=>{
             r += pixel.red
             g += pixel.green
             b += pixel.blue
             a += pixel.alpha
             total++;
+            // sortedColorsForMax.r.push(pixel.red)
+            // sortedColorsForMax.g.push(pixel.green)
+            // sortedColorsForMax.b.push(pixel.blue)
+            
         })
+    
+
+        let maxPixel = edge.filter((pixel)=>{
+            return ((pixel.red + pixel.green + pixel.blue)/3) < 80
+        }).reduce((a,b)=>{
+            return {
+                red: Math.max(a.red,b.red),
+                green: Math.max(a.green,b.green),
+                blue: Math.max(a.blue,b.blue),
+            }  
+        }, {red: 0, green: 0, blue: 0})
+        console.log(maxPixel)
+        // const maxRed = sortedColorsForMax.r.filter((pixel)=> pixel<100).reduce((a, b)=> Math.max(a,b), -Infinity)
+        // const maxGreen = sortedColorsForMax.g.filter((pixel)=> pixel<100).reduce((a, b)=> Math.max(a,b), -Infinity)
+        // const maxBlue = sortedColorsForMax.b.filter((pixel)=> pixel<100).reduce((a, b)=> Math.max(a,b), -Infinity)
+        // const maxColors ={
+        //     r: maxRed,
+        //     g: maxGreen,
+        //     b: maxBlue,
+        // }
+        // console.log(maxColors)
         r = r/total;
         g = g/total;
         b = b/total;
         a = a/total;
         return {
-            r, g, b, a
+            r, g, b, a, maxPixel
         }
     }
     
-    const setBackgroundGradient =(avgColorTop, avgColorBot, avgColorLeft, avgColorRight)=>{
+    const setBackgroundGradient =(avgColorTop, avgColorBot, avgColorLeft, avgColorRight, avgAll)=>{
         const CAP = 110;
+        const AVG_COLOR_THRESHOLD = 30;
         const aRGBTop = (avgColorTop.r + avgColorTop.g + avgColorTop.b)/3
         const aRGBBot = (avgColorBot.r + avgColorBot.g + avgColorBot.b)/3
         const aRGBRight = (avgColorRight.r + avgColorRight.g + avgColorRight.b)/3
@@ -158,9 +191,16 @@ export const colorScheme =(imageSrc, mainRef, dispatch)=>{
         let visibilityLeft = 0;
         
         const backgroundAnimationId = setInterval(()=>{
-            
-            mainRef.style.background = `linear-gradient(to bottom, #0f0f0f, rgb(${avgColorTop.r}, ${avgColorTop.g},${avgColorTop.b},${visibilityTop}), rgb(${avgColorBot.r}, ${avgColorBot.g},${avgColorBot.b},${visibilityBot}), #0f0f0f),
-            linear-gradient(to right, rgb(${avgColorLeft.r}, ${avgColorLeft.g},${avgColorLeft.b},${visibilityLeft}) 20%, transparent, rgb(${avgColorRight.r}, ${avgColorRight.g},${avgColorRight.b},${visibilityRight}) 80%)`
+            //use max pixel color of image if the edges are darker than the threshold
+            //of 30
+            if((aRGBTop + aRGBBot + aRGBLeft + aRGBRight)/4 < AVG_COLOR_THRESHOLD){
+                mainRef.style.background = `linear-gradient(to bottom, #0f0f0f, rgb(${avgAll.r}, ${avgAll.g},${avgAll.b},${visibilityTop}), rgb(${avgAll.r}, ${avgAll.g},${avgAll.b},${visibilityBot}), #0f0f0f),
+                linear-gradient(to right, rgb(${avgAll.r}, ${avgAll.g},${avgAll.b},${visibilityLeft}) 20%, transparent, rgb(${avgAll.maxPixel.red}, ${avgAll.maxPixel.green},${avgAll.maxPixel.blue},${visibilityRight}) 80%)`
+            }
+            else{
+                mainRef.style.background = `linear-gradient(to bottom, #0f0f0f, rgb(${avgColorTop.r}, ${avgColorTop.g},${avgColorTop.b},${visibilityTop}), rgb(${avgColorBot.r}, ${avgColorBot.g},${avgColorBot.b},${visibilityBot}), #0f0f0f),
+                linear-gradient(to right, rgb(${avgColorLeft.r}, ${avgColorLeft.g},${avgColorLeft.b},${visibilityLeft}) 20%, transparent, rgb(${avgColorRight.r}, ${avgColorRight.g},${avgColorRight.b},${visibilityRight}) 80%)`
+            }
             if(transparentPercent< 70){
                 transparentPercent += 0.02
             }
@@ -188,12 +228,15 @@ export const colorScheme =(imageSrc, mainRef, dispatch)=>{
             else{
                 visibilityLeft += 0.0003
             }
-        },1)
+        },10)
+
         setTimeout(()=>{
             clearInterval(backgroundAnimationId)
+            console.log('interval cleared')
         },10000) 
         
         dispatch({type: ACTIONS.SET_INTERVAL, payload: backgroundAnimationId})
+        return backgroundAnimationId;
     }
     
     initCanvas();
