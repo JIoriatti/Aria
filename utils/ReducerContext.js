@@ -35,6 +35,13 @@ export default function ReducerProvider ({children}){
         searchInput: '',
         isNoSearchResult: false,
         interval: null,
+        colorObj: null,
+        visibilityObj: {
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+        },
     });
 
 return (

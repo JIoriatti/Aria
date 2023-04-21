@@ -48,6 +48,10 @@ export const reducer = (state, action)=>{
             return {...state, hasSongEnded: action.payload}
         case ACTIONS.SET_INTERVAL:
             return {...state, interval: action.payload}
+        case ACTIONS.SET_COLOR_OBJ:
+            return {...state, colorObj: action.payload}
+        case ACTIONS.SET_VISIBILITY_OBJ:
+            return {...state, visibilityObj: action.payload}
         default:
             throw new Error();
     }
