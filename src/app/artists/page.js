@@ -16,6 +16,7 @@ import FeaturedTracks from '@/components/FeaturedTracks'
 import { useSearchParams } from 'next/navigation'
 import HeroNoVideo from '@/components/HeroNoVideo'
 import { useSongDispatchContext, useSongStateContext } from 'utils/SongContext'
+import { fadeOutAnimation, fadeInAnimation } from 'utils/backgroundAnimation'
 
 const font = League_Spartan({ subsets: ['latin'] })
 
@@ -36,8 +37,6 @@ export default function ArtistLandingPage() {
   const videoRef = useRef();
 
   const [loading, setLoading] = useState(true);
-//   const [isRowHovered, setIsRowHovered] = useState(false);
- 
 
   const controls = useAnimationControls();
 //   const songContainer = useRef();
@@ -53,8 +52,29 @@ export default function ArtistLandingPage() {
   }
 
   useEffect(()=>{
-    controls.set({opacity: 0})
-    controls.start({opacity : 1})
+    let fadeOutId;
+    let fadeInId;
+    
+    if(state.colorObj && !songState.hasSongEnded){
+      fadeOutId = fadeOutAnimation(dispatch, state, mainRef)
+      setTimeout(()=>{
+        fadeInId = fadeInAnimation(dispatch, state, mainRef)
+      },1500)
+    }
+
+    if(songState.hasSongEnded){
+      fadeOutId = fadeOutAnimation(dispatch,state,mainRef)
+    }
+    
+    
+    return () => {
+      clearInterval(fadeInId)
+      clearInterval(fadeOutId);
+      }
+  },[state.selectedMp3, state.colorObj])
+
+  useEffect(()=>{
+    controls.set({opacity:1})
   },[])
 
   useEffect(()=>{
@@ -70,7 +90,6 @@ export default function ArtistLandingPage() {
 
 useEffect(()=>{
   getArtistData(artistName).then((artistData)=>{
-    console.log(artistData)
     const albums = artistData.albums.filter((album)=>{
       return album.album_type === 'album'
     })
@@ -135,7 +154,7 @@ return (
         ref={mainRef}
         className={styles.main + ' ' + font.className}
         // style={{ backgroundImage: `url(${artistData?.artistInfo.images[0].url}` }}
-        initial={{opacity: 0}}
+        initial={{opacity: 1}}
         animate={controls}
       >
         <motion.div 

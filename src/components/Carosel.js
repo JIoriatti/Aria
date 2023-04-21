@@ -8,7 +8,8 @@ import { ACTIONS } from 'utils/actions'
 import Arrow from './Arrow'
 import { useSongDispatchContext, useSongStateContext } from 'utils/SongContext'
 import { useSession } from 'next-auth/react'
-import { colorScheme, setBackgroundGradient } from 'utils/colorScheme'
+import { colorScheme} from 'utils/colorScheme'
+
 
 const V_STEP = 0.06
 const MAX = 0.5
@@ -168,7 +169,8 @@ export default function Carosel({setTimerHit, data, loading, videoRef, mainRef})
             handleImageClickState(e);
             setTimerHit(false)
             handleSongChange(e);
-            colorScheme(e.target.dataset.image, mainRef.current, dispatch) 
+
+            colorScheme(e.target.dataset.image, dispatch, state)
         }
     }
 
@@ -224,9 +226,7 @@ export default function Carosel({setTimerHit, data, loading, videoRef, mainRef})
             artists.push(artist.name)
         })
         songInfo = {...songInfo, artistsNames: artists}
-        console.log(songInfo)
-        console.log(songInfo.id)
-        console.log(session.user.id)
+        
         await fetch('/api/favorite',{
             method: 'POST',
             body: JSON.stringify({
