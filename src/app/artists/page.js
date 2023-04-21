@@ -55,14 +55,14 @@ export default function ArtistLandingPage() {
     let fadeOutId;
     let fadeInId;
     
-    if(state.colorObj && !songState.hasSongEnded){
+    if(state.colorObj && !songState.hasSongEnded && state.isSongPlaying){
       fadeOutId = fadeOutAnimation(dispatch, state, mainRef)
       setTimeout(()=>{
         fadeInId = fadeInAnimation(dispatch, state, mainRef)
       },1500)
     }
 
-    if(songState.hasSongEnded){
+    if(songState.hasSongEnded || (state.colorObj && !state.isSongPlaying)){
       fadeOutId = fadeOutAnimation(dispatch,state,mainRef)
     }
     
@@ -71,7 +71,7 @@ export default function ArtistLandingPage() {
       clearInterval(fadeInId)
       clearInterval(fadeOutId);
       }
-  },[state.selectedMp3, state.colorObj])
+  },[state.selectedMp3, state.colorObj, state.isSongPlaying])
 
   useEffect(()=>{
     controls.set({opacity:1})
