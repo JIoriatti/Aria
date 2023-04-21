@@ -16,9 +16,6 @@ export const fadeOutAnimation = (dispatch, state, mainRef) => {
     let currentVisObj = state.visibilityObj;
 
         fadeOutId = setInterval(() => {
-            console.log('Fade Out Running')
-            console.log(state.visibilityObj.left, state.visibilityObj.top)
-            console.log(average>CAP ? 'above Cap' : 'nope')
             if (average < AVG_COLOR_THRESHOLD) {
                 mainRef.current.style.background = `linear-gradient(to bottom, #0f0f0f, rgb(${state.colorObj.all.r}, ${state.colorObj.all.g},${state.colorObj.all.b},${state.visibilityObj.top}), rgb(${state.colorObj.all.r}, ${state.colorObj.all.g},${state.colorObj.all.b},${state.visibilityObj.bottom}), #0f0f0f),
               linear-gradient(to right, rgb(${state.colorObj.all.r}, ${state.colorObj.all.g},${state.colorObj.all.b},${state.visibilityObj.left}) 20%, transparent, rgb(${state.colorObj.all.maxPixel.red}, ${state.colorObj.all.maxPixel.green},${state.colorObj.all.maxPixel.blue},${state.visibilityObj.right}) 80%)`
@@ -30,7 +27,6 @@ export const fadeOutAnimation = (dispatch, state, mainRef) => {
             
                 
                 if (state.visibilityObj.top - (currentVisObj.top/(TIMER/MS)+0.006) > 0) {
-                    console.log('regular working')
                     dispatch({
                         type: ACTIONS.SET_VISIBILITY_OBJ, payload: {
                             top: state.visibilityObj.top -= (currentVisObj.top/(TIMER/MS)+0.005),
@@ -41,7 +37,6 @@ export const fadeOutAnimation = (dispatch, state, mainRef) => {
                     })
                 }
                 else {
-                    console.log('else statement working')
                     dispatch({
                         type: ACTIONS.SET_VISIBILITY_OBJ, payload: {
                             top: state.visibilityObj.top = 0,
@@ -55,7 +50,6 @@ export const fadeOutAnimation = (dispatch, state, mainRef) => {
     
         setTimeout(() => {
             clearInterval(fadeOutId);
-            console.log('Fade Out Ended')
         }, TIMER)
     
         return fadeOutId;
@@ -74,7 +68,6 @@ export const fadeInAnimation = (dispatch, state, mainRef) => {
     const backgroundAnimationId = setInterval(() => {
         //use max pixel color of image if the edges are darker than the threshold
         //of 30
-        console.log('Fade In Running')
         if (average < AVG_COLOR_THRESHOLD) {
             mainRef.current.style.background = `linear-gradient(to bottom, #0f0f0f, rgb(${state.colorObj.all.r}, ${state.colorObj.all.g},${state.colorObj.all.b},${state.visibilityObj.top}), rgb(${state.colorObj.all.r}, ${state.colorObj.all.g},${state.colorObj.all.b},${state.visibilityObj.bottom}), #0f0f0f),
           linear-gradient(to right, rgb(${state.colorObj.all.r}, ${state.colorObj.all.g},${state.colorObj.all.b},${state.visibilityObj.left}) 20%, transparent, rgb(${state.colorObj.all.maxPixel.red}, ${state.colorObj.all.maxPixel.green},${state.colorObj.all.maxPixel.blue},${state.visibilityObj.right}) 80%)`
@@ -112,7 +105,6 @@ export const fadeInAnimation = (dispatch, state, mainRef) => {
 
     setTimeout(() => {
         clearInterval(backgroundAnimationId)
-        console.log('Fade In Ended')
     }, 7000)
 
     dispatch({ type: ACTIONS.SET_INTERVAL, payload: backgroundAnimationId })
