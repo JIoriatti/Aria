@@ -3,7 +3,7 @@ import { ACTIONS } from "./actions";
 
 export const fadeOutAnimation = (dispatch, state, mainRef) => {
     const CAP = 110;
-    const AVG_COLOR_THRESHOLD = 30;
+    const AVG_COLOR_THRESHOLD = 10;
     const TIMER = 1500;
     const MS = 10;
     let fadeOutId;
@@ -26,13 +26,13 @@ export const fadeOutAnimation = (dispatch, state, mainRef) => {
             }
             
                 
-                if (state.visibilityObj.top - (currentVisObj.top/(TIMER/MS)+0.006) > 0) {
+                if (state.visibilityObj.top - (currentVisObj.top/(TIMER/MS)+0.010) > 0) {
                     dispatch({
                         type: ACTIONS.SET_VISIBILITY_OBJ, payload: {
-                            top: state.visibilityObj.top -= (currentVisObj.top/(TIMER/MS)+0.005),
-                            bottom: state.visibilityObj.bottom -= (currentVisObj.bottom/(TIMER/MS)+0.005),
-                            right: state.visibilityObj.right -= (currentVisObj.right/(TIMER/MS)+0.005),
-                            left: state.visibilityObj.left -= (currentVisObj.left/(TIMER/MS)+0.005)
+                            top: state.visibilityObj.top -= (currentVisObj.top/(TIMER/MS)+0.010),
+                            bottom: state.visibilityObj.bottom -= (currentVisObj.bottom/(TIMER/MS)+0.010),
+                            right: state.visibilityObj.right -= (currentVisObj.right/(TIMER/MS)+0.010),
+                            left: state.visibilityObj.left -= (currentVisObj.left/(TIMER/MS)+0.010)
                         }
                     })
                 }
@@ -57,14 +57,13 @@ export const fadeOutAnimation = (dispatch, state, mainRef) => {
 
 export const fadeInAnimation = (dispatch, state, mainRef) => {
     const CAP = 110;
-    const AVG_COLOR_THRESHOLD = 30;
+    const AVG_COLOR_THRESHOLD = 10;
     const aRGBTop = (state.colorObj.top.r + state.colorObj.top.g + state.colorObj.top.b) / 3
     const aRGBBot = (state.colorObj.bottom.r + state.colorObj.bottom.g + state.colorObj.bottom.b) / 3
     const aRGBRight = (state.colorObj.right.r + state.colorObj.right.g + state.colorObj.right.b) / 3
     const aRGBLeft = (state.colorObj.left.r + state.colorObj.left.g + state.colorObj.left.b) / 3
     let transparentPercent = 40;
     const average = (aRGBTop + aRGBBot + aRGBLeft + aRGBRight) / 4
-
     const backgroundAnimationId = setInterval(() => {
         //use max pixel color of image if the edges are darker than the threshold
         //of 30
@@ -79,7 +78,7 @@ export const fadeInAnimation = (dispatch, state, mainRef) => {
         if (transparentPercent < 70) {
             transparentPercent += 0.04
         }
-        if (aRGBTop > CAP) {
+        if (average > CAP) {
             dispatch({
                 type: ACTIONS.SET_VISIBILITY_OBJ, payload: {
                     ...state.visibilityObj,
@@ -94,10 +93,10 @@ export const fadeInAnimation = (dispatch, state, mainRef) => {
             dispatch({
                 type: ACTIONS.SET_VISIBILITY_OBJ, payload: {
                     ...state.visibilityObj,
-                    top: state.visibilityObj.top += 0.0012,
-                    bottom: state.visibilityObj.bottom += 0.0012,
-                    right: state.visibilityObj.right += 0.0012,
-                    left: state.visibilityObj.left += 0.0012,
+                    top: state.visibilityObj.top += 0.0024,
+                    bottom: state.visibilityObj.bottom += 0.0024,
+                    right: state.visibilityObj.right += 0.0024,
+                    left: state.visibilityObj.left += 0.0024,
                 }
             })
         }
