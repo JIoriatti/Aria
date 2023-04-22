@@ -54,10 +54,10 @@ export default function ArtistLandingPage() {
   useEffect(()=>{
     let fadeOutId;
     let fadeInId;
-    
+    let timeout;
     if(state.colorObj && !songState.hasSongEnded && state.isSongPlaying){
       fadeOutId = fadeOutAnimation(dispatch, state, mainRef)
-      setTimeout(()=>{
+      timeout = setTimeout(()=>{
         fadeInId = fadeInAnimation(dispatch, state, mainRef)
       },1500)
     }
@@ -70,6 +70,7 @@ export default function ArtistLandingPage() {
     return () => {
       clearInterval(fadeInId)
       clearInterval(fadeOutId);
+      clearTimeout(timeout)
       }
   },[state.selectedMp3, state.colorObj, state.isSongPlaying])
 
