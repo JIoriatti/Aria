@@ -169,8 +169,8 @@ export default function Carosel({setTimerHit, data, loading, videoRef, mainRef})
             handleImageClickState(e);
             setTimerHit(false)
             handleSongChange(e);
-
             colorScheme(e.target.dataset.image, dispatch, state)
+            addToHistory(e) 
         }
     }
 
@@ -213,11 +213,10 @@ export default function Carosel({setTimerHit, data, loading, videoRef, mainRef})
         dispatch({ type: ACTIONS.SET_HOVERED_IMAGE, payload: e.currentTarget.dataset.id })
     },[])
 
-
-    const handleFavoriteClick = async(e)=>{
+    const createDatabaseObj = (target)=>{
         let artists = [];
         let songInfo = data.find((song)=>{
-            return song.name === e.target.dataset.name
+            return song.id === target.dataset.id
         })
         if(songInfo.hasOwnProperty('tracks')){
             songInfo = {...songInfo, preview_url: songInfo.tracks.items[0].preview_url}
@@ -226,16 +225,39 @@ export default function Carosel({setTimerHit, data, loading, videoRef, mainRef})
             artists.push(artist.name)
         })
         songInfo = {...songInfo, artistsNames: artists}
-        
-        await fetch('/api/favorite',{
-            method: 'POST',
-            body: JSON.stringify({
-                userId: session.user.id,
-                songInfo,
-            })
-        })
+
+        return songInfo;
     }
 
+    const handleFavoriteClick = async(e)=>{
+        try{
+            const songInfo = createDatabaseObj(e.target)
+            await fetch('/api/favorite',{
+                method: 'POST',
+                body: JSON.stringify({
+                    userId: session.user.id,
+                    songInfo,
+                })
+            })
+    }catch(err){
+        throw new Error(err)
+    }
+    }
+    const addToHistory = async(e)=>{
+        console.log(session.user.id)
+        try{
+            const songInfo = createDatabaseObj(e.target)
+            await fetch('/api/history',{
+                method: 'POST',
+                body: JSON.stringify({
+                    userId: session.user.id,
+                    songInfo,
+                })
+            })
+        }catch(err){
+            throw new Error(err)
+        }
+    }
 
     useEffect(()=>{
             const songContainerRef = songContainer.current;
@@ -461,6 +483,7 @@ export default function Carosel({setTimerHit, data, loading, videoRef, mainRef})
                                                             <div
                                                                 className={styles.heart}
                                                                 data-name={album.name}
+                                                                data-id={album.id}
                                                                 onClick={handleFavoriteClick}
                                                             ></div>
                                                         </div>
