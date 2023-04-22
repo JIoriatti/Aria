@@ -170,7 +170,9 @@ export default function Carosel({setTimerHit, data, loading, videoRef, mainRef})
             setTimerHit(false)
             handleSongChange(e);
             colorScheme(e.target.dataset.image, dispatch, state)
-            addToHistory(e) 
+            if(e.target.dataset.mp3 !== state.selectedMp3){
+                addToHistory(e) 
+            }
         }
     }
 
