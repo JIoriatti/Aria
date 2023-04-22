@@ -3,7 +3,7 @@ import { addFavorite, getFavorites} from "lib/prisma/favoriteController"
 const favoriteHandler = async (req, res)=>{
   try{
     const { songInfo } = JSON.parse(req.body);
-    const { userId } = JSON.parse(req.body);
+    const { userId } = req.query;
 
     if(req.method === 'POST'){
       const response = await addFavorite(songInfo, userId);
