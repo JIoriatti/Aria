@@ -26,7 +26,7 @@ export default function SideBar({font}){
                 console.log(history);
             })
         }
-      },[])
+      },[status])
 
     return (
             <motion.div 
