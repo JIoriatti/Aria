@@ -36,7 +36,7 @@ export default function SideBar({font}){
           const history = await response.json();
           return history;
         }
-        if(status === 'authenticated'){
+        if(status === 'authenticated' && isShown){
             console.log(session.user.id)
             getUserHistory().then((history)=>{
                 console.log(history.history);
@@ -44,7 +44,7 @@ export default function SideBar({font}){
                 setLoading(false);
             })
         }
-      },[status])
+      },[status, isShown])
 
     return (
             <motion.div 
