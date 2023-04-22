@@ -6,10 +6,14 @@ import { useSongStateContext } from 'utils/SongContext';
 export default function HistoryWindow({history, sideBarRef, iconContainerRef}){
     const songState = useSongStateContext();
     const [height, setHeight] = useState(sideBarRef.current.clientHeight - iconContainerRef.current.clientHeight - 125)
+    const initialHeightRef = useRef(height);
 
     useEffect(()=>{
         if(!songState.isTimerHit){
             setHeight((prevHeight)=> prevHeight -= 60)
+        }
+        else{
+            setHeight(initialHeightRef.current)
         }
     },[songState.isTimerHit])
     return (
