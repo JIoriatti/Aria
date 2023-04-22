@@ -45,14 +45,15 @@ export default function HistoryWindow({history, sideBarRef, iconContainerRef}){
                                 <div 
                                     className={styles.songArtist}
                                 >
-                                    {song.artistsNames.map((artist,i, array)=>{
+                                    {/* {song.artistsNames.map((artist,i, array)=>{
                                         if(i<array.length -1){
                                             return `${artist}, `;
                                         }
                                         else{
                                             return artist
                                         }
-                                    })}
+                                    })} */}
+                                    {song.artistsNames[0]}
                                 </div>
                             </div>
                         </div>
