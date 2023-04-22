@@ -1,16 +1,29 @@
 import styles from './SideBar.module.css'
-import { motion} from 'framer-motion'
+import { AnimatePresence, motion} from 'framer-motion'
 import { useState, useEffect } from 'react';
 import { useStateContext } from 'utils/ReducerContext'
 import { useSongStateContext } from 'utils/SongContext';
 import { useSession } from 'next-auth/react';
+import HistoryWindow from './HistoryWindow';
 
 
 export default function SideBar({font}){
     const state = useStateContext();
     const [isHovered, setIsHovered] = useState(false);
+    const [userHistory, setUserHistory] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [isShown, setIsShown] = useState(false);
     const songState = useSongStateContext();
     const { data: session, status } = useSession();
+
+
+
+    useEffect(()=>{
+        if(!isHovered){
+            console.log('shown set to false')
+            setIsShown(false);
+        }
+    },[isHovered])
 
     useEffect(()=>{
         const getUserHistory = async ()=>{
@@ -23,7 +36,9 @@ export default function SideBar({font}){
         if(status === 'authenticated'){
             console.log(session.user.id)
             getUserHistory().then((history)=>{
-                console.log(history);
+                console.log(history.history);
+                setUserHistory(history.history);
+                setLoading(false);
             })
         }
       },[status])
@@ -53,7 +68,7 @@ export default function SideBar({font}){
                             >
                                 <img 
                                     src="/favorites-star.png" 
-                                    alt="History" 
+                                    alt="Favorites" 
                                     className={styles.iconImage}
                                 />
                             </div>
@@ -64,12 +79,16 @@ export default function SideBar({font}){
                             <div 
                                 className={styles.icon}
                             >
-                                <img src="/eye.png" alt="History" className={styles.iconImage}/>
+                                <img src="/eye.png" alt="Recently Viewed" className={styles.iconImage}/>
                             </div>
                             <span className={styles.seperator}></span>
                             <div className={styles.text}>Recently Viewed Artists</div>
                         </div>
-                        <div className={styles.itemWrapper}>
+                        <div 
+                            className={styles.itemWrapper}
+                            id='history'
+                            onClick={()=>setIsShown(!isShown)}
+                        >
                             <div 
                                 className={styles.icon}
                             >
@@ -78,6 +97,11 @@ export default function SideBar({font}){
                             <span className={styles.seperator}></span>
                             <div className={styles.text}>History</div>
                         </div>
+                        <AnimatePresence>
+                            {(status === 'authenticated' && !loading && isShown && isHovered) &&
+                                <HistoryWindow history={userHistory}/>
+                            }
+                        </AnimatePresence>
                     </div>
                 </div>
             </motion.div>
