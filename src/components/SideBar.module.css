@@ -45,7 +45,7 @@
     width: 100%;
     /* min-height: calc(100% - 70px); */
     min-width: 300px;
-    overflow-y: scroll;
+    /* overflow-y: scroll; */
     gap: 2;
 }
 .itemWrapper{

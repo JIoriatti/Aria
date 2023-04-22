@@ -1,10 +1,31 @@
+/* width */
+.container::-webkit-scrollbar {
+    width: 7px;
+  }
+  
+  /* Track */
+  .container::-webkit-scrollbar-track {
+    background: #575757;
+  }
+  
+  /* Handle */
+  .container::-webkit-scrollbar-thumb {
+    background: #323232;
+  }
+  
+  /* Handle on hover */
+  /* .container::-webkit-scrollbar-thumb:hover {
+    background: var(--themeColorLight)
+  } */
+
+
 .container{
     display: flex;
     flex-direction: column;
     gap: 8px;
-    width: 80%;
-    height: 500px;
-    max-height: 500px;
+    width:90%;
+    /* height: 650px;
+    max-height: 650px; */
     color: white;
     overflow-y: scroll;
     margin-top: 1em;

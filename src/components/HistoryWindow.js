@@ -1,14 +1,15 @@
-import { useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import styles from './HistoryWindow.module.css'
 import { motion } from 'framer-motion'
 
-export default function HistoryWindow({history}){
+export default function HistoryWindow({history, sideBarRef, iconContainerRef}){
+    const heightRef = useRef(sideBarRef.current.clientHeight - iconContainerRef.current.clientHeight - 125);
     return (
         <motion.div 
             className={styles.container}
             initial={{height: 0}}
             transition={{duration: 0.2}}
-            animate={{originY: 0, height: 'initial'}}
+            animate={{originY: 0, height: `${heightRef.current}px`}}
             exit={{height: 0}}
         >
             {history.map((song,i)=>{

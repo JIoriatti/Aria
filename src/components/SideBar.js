@@ -1,6 +1,6 @@
 import styles from './SideBar.module.css'
 import { AnimatePresence, motion} from 'framer-motion'
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useStateContext } from 'utils/ReducerContext'
 import { useSongStateContext } from 'utils/SongContext';
 import { useSession } from 'next-auth/react';
@@ -13,6 +13,9 @@ export default function SideBar({font}){
     const [userHistory, setUserHistory] = useState(null);
     const [loading, setLoading] = useState(true);
     const [isShown, setIsShown] = useState(false);
+    const [isAnimationFinished, setIsAnimationFinished] = useState(false);
+    const sideBarRef = useRef();
+    const iconContainerRef = useRef();
     const songState = useSongStateContext();
     const { data: session, status } = useSession();
 
@@ -52,15 +55,23 @@ export default function SideBar({font}){
                 transition={{width: {duration: 0.2, delay: isHovered ? 0.4 : 0}, height:{duration: 0.2, delay: songState.isTimerHit ? 0.1 : 0}, translateX:{duration: 0.2, delay: state.scrollYPosition !=0 ? 0: 0.8}}}
                 onMouseEnter={()=>setIsHovered(true)}
                 onMouseLeave={()=>setIsHovered(false)}
+                onAnimationStart={()=> setIsAnimationFinished(false)}
+                onAnimationComplete={()=> setIsAnimationFinished(true)}
             >
-                <div className={styles.sideBar}>
+                <div 
+                    className={styles.sideBar}
+                    ref={sideBarRef}
+                >
                     <motion.div 
                         className={styles.background}
                         animate={{ opacity: state.scrollYPosition != 0 ? 1 : 0 }}
                         transition={{ duration: 0.35 }}
                     >
                     </motion.div>
-                    <div className={styles.iconContainer}>
+                    <div 
+                        className={styles.iconContainer}
+                        ref={iconContainerRef}
+                    >
                         <div 
                             className={styles.itemWrapper}>
                             <div 
@@ -87,7 +98,12 @@ export default function SideBar({font}){
                         <div 
                             className={styles.itemWrapper}
                             id='history'
-                            onClick={()=>setIsShown(!isShown)}
+                            onClick={()=>{
+                                    if(isAnimationFinished){
+                                        setIsShown(!isShown)
+                                    }
+                                }
+                            }
                         >
                             <div 
                                 className={styles.icon}
@@ -99,7 +115,7 @@ export default function SideBar({font}){
                         </div>
                         <AnimatePresence>
                             {(status === 'authenticated' && !loading && isShown && isHovered) &&
-                                <HistoryWindow history={userHistory}/>
+                                <HistoryWindow history={userHistory} sideBarRef={sideBarRef} iconContainerRef={iconContainerRef}/>
                             }
                         </AnimatePresence>
                     </div>
