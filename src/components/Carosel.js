@@ -496,9 +496,9 @@ export default function Carosel({setTimerHit, data, loading, videoRef, mainRef})
                                                 {state.hoveredImage === album.id &&
                                                     <motion.div
                                                         className={styles.insetShadow}
-                                                        initial={{ opacity: 0, scaleY: 0, originY: 0 }}
-                                                        transition={{ duration: 0.35, delay: 0.4 }}
-                                                        animate={{ opacity: 1, scaleY: 1 }}
+                                                        initial={{ opacity: 0, scaleY: 0, originY: 0, height: 200 }}
+                                                        transition={{ duration: 0.2, delay: 0.5 }}
+                                                        animate={{ opacity: 1, scaleY: 1, height: '100%' }}
                                                     >
                                                     </motion.div>
                                                 }

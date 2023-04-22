@@ -1,17 +1,17 @@
 /* width */
 .container::-webkit-scrollbar {
     width: 7px;
-  }
-  
-  /* Track */
-  .container::-webkit-scrollbar-track {
-    background: #575757;
-  }
-  
-  /* Handle */
-  .container::-webkit-scrollbar-thumb {
+}
+
+/* Track */
+.container::-webkit-scrollbar-track {
     background: #323232;
-  }
+}
+
+/* Handle */
+.container::-webkit-scrollbar-thumb {
+    background: #575757;
+}
   
   /* Handle on hover */
   /* .container::-webkit-scrollbar-thumb:hover {
