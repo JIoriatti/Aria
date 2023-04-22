@@ -17,6 +17,7 @@ import { useSearchParams } from 'next/navigation'
 import HeroNoVideo from '@/components/HeroNoVideo'
 import { useSongDispatchContext, useSongStateContext } from 'utils/SongContext'
 import { fadeOutAnimation, fadeInAnimation } from 'utils/backgroundAnimation'
+import { useSession } from 'next-auth/react'
 
 const font = League_Spartan({ subsets: ['latin'] })
 
@@ -135,6 +136,7 @@ useEffect(()=>{
   }
 
 },[state.scrollYPosition])
+
 return (
     <>
         <DynamicHeader

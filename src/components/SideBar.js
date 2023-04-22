@@ -1,14 +1,32 @@
 import styles from './SideBar.module.css'
 import { motion} from 'framer-motion'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useStateContext } from 'utils/ReducerContext'
 import { useSongStateContext } from 'utils/SongContext';
+import { useSession } from 'next-auth/react';
 
 
 export default function SideBar({font}){
     const state = useStateContext();
     const [isHovered, setIsHovered] = useState(false);
     const songState = useSongStateContext();
+    const { data: session, status } = useSession();
+
+    useEffect(()=>{
+        const getUserHistory = async ()=>{
+          const response = await fetch(`/api/history/${session?.user?.id}`,{
+            method: 'GET',
+          })
+          const history = await response.json();
+          return history;
+        }
+        if(status === 'authenticated'){
+            console.log(session.user.id)
+            getUserHistory().then((history)=>{
+                console.log(history);
+            })
+        }
+      },[])
 
     return (
             <motion.div 

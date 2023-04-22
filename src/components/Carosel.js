@@ -232,10 +232,9 @@ export default function Carosel({setTimerHit, data, loading, videoRef, mainRef})
     const handleFavoriteClick = async(e)=>{
         try{
             const songInfo = createDatabaseObj(e.target)
-            await fetch('/api/favorite',{
+            await fetch(`/api/favorites/${session.user.id}`,{
                 method: 'POST',
                 body: JSON.stringify({
-                    userId: session.user.id,
                     songInfo,
                 })
             })
@@ -247,10 +246,9 @@ export default function Carosel({setTimerHit, data, loading, videoRef, mainRef})
         console.log(session.user.id)
         try{
             const songInfo = createDatabaseObj(e.target)
-            await fetch('/api/history',{
+            await fetch(`/api/history/${session.user.id}`,{
                 method: 'POST',
                 body: JSON.stringify({
-                    userId: session.user.id,
                     songInfo,
                 })
             })
