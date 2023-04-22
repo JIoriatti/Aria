@@ -1,15 +1,23 @@
 import { useEffect, useRef, useState } from 'react'
 import styles from './HistoryWindow.module.css'
 import { motion } from 'framer-motion'
+import { useSongStateContext } from 'utils/SongContext';
 
 export default function HistoryWindow({history, sideBarRef, iconContainerRef}){
-    const heightRef = useRef(sideBarRef.current.clientHeight - iconContainerRef.current.clientHeight - 125);
+    const songState = useSongStateContext();
+    const [height, setHeight] = useState(sideBarRef.current.clientHeight - iconContainerRef.current.clientHeight - 125)
+
+    useEffect(()=>{
+        if(!songState.isTimerHit){
+            setHeight((prevHeight)=> prevHeight -= 60)
+        }
+    },[songState.isTimerHit])
     return (
         <motion.div 
             className={styles.container}
             initial={{height: 0}}
             transition={{duration: 0.2}}
-            animate={{originY: 0, height: `${heightRef.current}px`}}
+            animate={{originY: 0, height: `${height}px`}}
             exit={{height: 0}}
         >
             {history.map((song,i)=>{
