@@ -21,11 +21,15 @@ export default function FeaturedTracks ({tracks, loading, artistData}){
         const timeInSeconds = timeInMs / 1000;
         const timeInMinutes = timeInSeconds / 60;
         const remainderOfNextMinute = timeInMinutes % 1;
-
+        
         const minutes = Math.trunc(timeInMinutes);
         const seconds = remainderOfNextMinute * 60;
-
-        return `${minutes}:${seconds.toFixed(0)}`
+        if(seconds.toFixed(0)<10){
+            return `${minutes}:0${seconds.toFixed(0)}`
+        }
+        else{
+            return `${minutes}:${seconds.toFixed(0)}`
+        }
     }
 
     
