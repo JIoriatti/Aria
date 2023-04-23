@@ -35,7 +35,6 @@ export default function ArtistLandingPage() {
   const [compilations, setCompilations] = useState(null);
   const [areRowsInView, setAreRowsInView] = useState(false)
   const [isFeaturedTrackInView, setIsFeaturedTrackInView] = useState(false)
-  const [userFavorites, setUserFavorites] = useState(null);
   const [isFavoritesLoading, setIsFavoritesLoading] = useState(true)
 
   const videoRef = useRef();
@@ -153,12 +152,12 @@ useEffect(()=>{
               }
           })
           const user = await response.json();
-          console.log(user.favorites)
           return user.favorites;
       }
       if(status === 'authenticated'){
         getUserFavorites().then((favorites)=> {
-          setUserFavorites(favorites);
+          dispatch({type: ACTIONS.SET_USER_FAVORITES, payload: favorites})
+          // setUserFavorites(favorites);
           setIsFavoritesLoading(false);
         })
       }
@@ -216,9 +215,9 @@ return (
                 animate={{opacity: 1}}
                 exit={{opacity: 1}}
               >
-                <Carosel setTimerHit={setTimerHit} data={topTracks} loading={loading} videoRef={videoRef} mainRef={mainRef} userFavorites={userFavorites} setUserFavorites={setUserFavorites}/>
-                <Carosel setTimerHit={setTimerHit} data={albums} loading={loading} videoRef={videoRef} mainRef={mainRef} userFavorites={userFavorites} setUserFavorites={setUserFavorites}/>
-                <Carosel setTimerHit={setTimerHit} data={singles} loading={loading} videoRef={videoRef} mainRef={mainRef} userFavorites={userFavorites} setUserFavorites={setUserFavorites}/>
+                <Carosel setTimerHit={setTimerHit} data={topTracks} loading={loading} videoRef={videoRef} mainRef={mainRef}/>
+                <Carosel setTimerHit={setTimerHit} data={albums} loading={loading} videoRef={videoRef} mainRef={mainRef} />
+                <Carosel setTimerHit={setTimerHit} data={singles} loading={loading} videoRef={videoRef} mainRef={mainRef}/>
                 <ArtistInfo artistData={artistData} loading={loading}/>
               </motion.div>
             }

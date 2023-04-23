@@ -7,7 +7,6 @@ export default function Arrow ({songContainer, isRowHovered}){
     const [screenWidth, setScreenWidth] = useState(null);
     const handleClickLeft=(e)=>{
         e.preventDefault()
-        console.log(songContainer)
         songContainer.current.scrollBy({
             left: -1550 ,
             behavior: 'smooth'
@@ -15,7 +14,6 @@ export default function Arrow ({songContainer, isRowHovered}){
     }
     const handleClickRight=(e)=>{
         e.preventDefault()
-        console.log(songContainer)
         songContainer.current.scrollBy({
             left: 1550 ,
             behavior: 'smooth'

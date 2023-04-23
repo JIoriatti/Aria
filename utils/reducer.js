@@ -56,6 +56,8 @@ export const reducer = (state, action)=>{
             return {...state, isHistoryPlaying: action.payload}
         case ACTIONS.SET_USER_HISTORY:
             return {...state, userHistory: action.payload}
+        case ACTIONS.SET_USER_FAVORITES:
+            return {...state, userFavorites: action.payload}
         default:
             throw new Error();
     }

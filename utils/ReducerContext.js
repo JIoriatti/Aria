@@ -44,6 +44,7 @@ export default function ReducerProvider ({children}){
         },
         isHistoryPlaying: false,
         userHistory: null,
+        userFavorites: null,
     });
 
 return (

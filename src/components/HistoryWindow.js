@@ -6,6 +6,8 @@ import { useStateContext, useDispatchContext } from 'utils/ReducerContext';
 import { ACTIONS } from 'utils/actions';
 import { handleSongChange, handleSongChangeState } from 'utils/songHandler';
 import { colorScheme } from 'utils/colorScheme';
+import { handleFavoriteClick } from 'utils/handleFavorite';
+import { useSession } from 'next-auth/react';
 
 export default function HistoryWindow({sideBarRef, iconContainerRef}){
     const songState = useSongStateContext();
@@ -14,6 +16,8 @@ export default function HistoryWindow({sideBarRef, iconContainerRef}){
     const dispatch = useDispatchContext();
     const [height, setHeight] = useState(sideBarRef.current.clientHeight - iconContainerRef.current.clientHeight - 175)
     const [hoveredSong, setHoveredSong] = useState(null);
+
+    const {data: session, status} = useSession();
     
     const initialHeightRef = useRef(height);
 
@@ -103,12 +107,27 @@ export default function HistoryWindow({sideBarRef, iconContainerRef}){
                             <div 
                                 className={styles.heart}
                                 title='Favorite'
+                                data-id={song.id}
+                                onClick={(e)=>{
+                                    if(e.target.dataset.id === song.id){
+                                        handleFavoriteClick(e, null, session, dispatch, song)
+                                    }
+                                }}
                             >
+                            {state.userFavorites.some((favorite) => favorite.id === song.id) ?
+                                <img
+                                    src="/redHeart.png"
+                                    alt="Favorite"
+                                    className={styles.miniBtnImage + ' ' + styles.heartImage}
+                                />
+                                :
                                 <img
                                     src="/heart-svgrepo-com.png"
                                     alt="Favorite"
-                                    className={styles.miniBtnImage}
+                                    className={styles.miniBtnImage + ' ' + styles.heartImage}
                                 />
+
+                            }
                             </div>
                         </>
                     }

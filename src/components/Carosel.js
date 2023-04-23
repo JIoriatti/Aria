@@ -10,9 +10,10 @@ import { useSongDispatchContext, useSongStateContext } from 'utils/SongContext'
 import { useSession } from 'next-auth/react'
 import { colorScheme} from 'utils/colorScheme'
 import { handleSongChange, handleSongChangeState } from 'utils/songHandler'
+import { handleFavoriteClick, createDatabaseObj } from 'utils/handleFavorite'
 
 
-export default function Carosel({setTimerHit, data, loading, videoRef, mainRef, userFavorites, setUserFavorites}){
+export default function Carosel({setTimerHit, data, loading, videoRef, mainRef}){
     const [isRowHovered, setIsRowHovered] = useState(false);
     
     const state = useStateContext();
@@ -85,44 +86,10 @@ export default function Carosel({setTimerHit, data, loading, videoRef, mainRef, 
         dispatch({ type: ACTIONS.SET_HOVERED_IMAGE, payload: e.currentTarget.dataset.id })
     },[])
 
-    const createDatabaseObj = (target)=>{
-        let artists = [];
-        let songInfo = data.find((song)=>{
-            return song.id === target.dataset.id
-        })
-        if(songInfo.hasOwnProperty('tracks')){
-            songInfo = {...songInfo, preview_url: songInfo.tracks.items[0].preview_url}
-        }
-        songInfo.artists.forEach((artist)=>{
-            artists.push(artist.name)
-        })
-        songInfo = {...songInfo, artistsNames: artists}
 
-        return songInfo;
-    }
-
-    const handleFavoriteClick = async(e)=>{
-        try{
-            const songInfo = createDatabaseObj(e.target)
-            await fetch(`/api/favorites/${session.user.id}`,{
-                method: 'POST',
-                body: JSON.stringify({
-                    songInfo,
-                })
-            })
-            const response = await fetch(`/api/favorites/${session.user.id}`,{
-                method: 'GET'
-            })
-            const updatedFavorites = await response.json();
-            setUserFavorites(updatedFavorites.favorites);
-    }catch(err){
-        throw new Error(err)
-    }
-    }
     const addToHistory = async(e)=>{
-        console.log(session.user.id)
         try{
-            const songInfo = createDatabaseObj(e.target)
+            const songInfo = createDatabaseObj(e.target, data)
             await fetch(`/api/history/${session.user.id}`,{
                 method: 'POST',
                 body: JSON.stringify({
@@ -144,7 +111,6 @@ export default function Carosel({setTimerHit, data, loading, videoRef, mainRef, 
     //Clear background color animation interval when a new song is clicked
     useEffect(()=>{
         if(state.interval){
-            console.log('interval cleared from useEffect')
             return () => clearInterval(state.interval)
         }
     },[state.interval])
@@ -218,7 +184,7 @@ export default function Carosel({setTimerHit, data, loading, videoRef, mainRef, 
                                                     // data-color={image.color}
                                                     data-mp3={album?.tracks?.items[0]?.preview_url}
                                                     onClick={handleImageClick}
-                                                    animate={state.selectedMp3 === album.tracks.items[0].preview_url && state.isSongPlaying ? { borderRadius: state.hoveredImage === album.id ? '0px' : '5px', outline: userFavorites.some((song)=> song.spotifyId === album.id) ? '2px solid gold' : '2px solid white' } : { borderRadius: state.hoveredImage === album.id ? '0px' : '5px', boxShadow: state.hoveredImage === album.id ? 'none' : null }}
+                                                    animate={state.selectedMp3 === album.tracks.items[0].preview_url && state.isSongPlaying ? { borderRadius: state.hoveredImage === album.id ? '0px' : '5px', outline: state.userFavorites.some((song)=> song.spotifyId === album.id) ? '2px solid gold' : '2px solid white' } : { borderRadius: state.hoveredImage === album.id ? '0px' : '5px', boxShadow: state.hoveredImage === album.id ? 'none' : null }}
                                                     transition={{ duration: 0.1, delay: state.hoveredImage === album.id ? 0.5 : 0 }}
 
                                                 >
@@ -266,7 +232,7 @@ export default function Carosel({setTimerHit, data, loading, videoRef, mainRef, 
                                                     data-mp3={album?.preview_url}
                                                     data-id={album.id}
                                                     onClick={handleImageClick}
-                                                    animate={state.selectedMp3 === album.preview_url && state.isSongPlaying ? { borderRadius: state.hoveredImage === album.id ? '0px' : '5px', outline: userFavorites.some((song)=> song.spotifyId === album.id) ? '2px solid gold':'2px solid white' } : { borderRadius: state.hoveredImage === album.id ? '0px' : '5px', boxShadow: state.hoveredImage === album.id ? 'none' : null }}
+                                                    animate={state.selectedMp3 === album.preview_url && state.isSongPlaying ? { borderRadius: state.hoveredImage === album.id ? '0px' : '5px', outline: state.userFavorites.some((song)=> song.spotifyId === album.id) ? '2px solid gold':'2px solid white' } : { borderRadius: state.hoveredImage === album.id ? '0px' : '5px', boxShadow: state.hoveredImage === album.id ? 'none' : null }}
                                                     transition={{ duration: 0.1, delay: state.hoveredImage === album.id ? 0.5 : 0 }}
 
                                                 >
@@ -357,10 +323,10 @@ export default function Carosel({setTimerHit, data, loading, videoRef, mainRef, 
                                                                 className={styles.plus}
                                                             ></div>
                                                             <div
-                                                                className={userFavorites.some((song)=> song.spotifyId === album.id) ? styles.favorited : styles.heart}
+                                                                className={state.userFavorites.some((song)=> song.spotifyId === album.id) ? styles.favorited : styles.heart}
                                                                 data-name={album.name}
                                                                 data-id={album.id}
-                                                                onClick={handleFavoriteClick}
+                                                                onClick={(e)=>handleFavoriteClick(e, data, session, dispatch)}
                                                             ></div>
                                                         </div>
 
@@ -375,7 +341,7 @@ export default function Carosel({setTimerHit, data, loading, videoRef, mainRef, 
                                                         initial={{ opacity: 0, scaleY: 0, originY: 0, height: 200 }}
                                                         transition={{ duration: 0.2, delay: 0.5 }}
                                                         animate={{ opacity: 1, scaleY: 1, height: '100%' }}
-                                                        style={{boxShadow: userFavorites.some((song)=> song.spotifyId === album.id) ?'inset 0 0 20px 0 gold':'inset 0 0 20px 0 var(--accentBlue)'}}
+                                                        style={{boxShadow: state.userFavorites.some((song)=> song.spotifyId === album.id) ?'inset 0 0 20px 0 gold':'inset 0 0 20px 0 var(--accentBlue)'}}
                                                     >
                                                     </motion.div>
                                                 }

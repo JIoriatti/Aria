@@ -1,7 +1,6 @@
 import { addFavorite, getFavorites} from "lib/prisma/favoriteController"
 
 const favoriteHandler = async (req, res)=>{
-  console.log('got here')
   try{
     const { userId } = req.query;
     

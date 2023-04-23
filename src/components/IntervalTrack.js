@@ -21,9 +21,7 @@ export default function IntervalTrack ({tracks, index, setIndex}) {
             }
         }
     }
-useEffect(()=>{
-    console.log(tracks)
-},[])
+
     return (
         <div className={styles.container}>
             <div 

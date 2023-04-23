@@ -27,17 +27,11 @@ export default function ColorSchemer({image}){
             )
             const edges = getEdges();
             const allPixels = getAllPixels();
-            console.log(allPixels);
-            // console.log(edges.total)
+          
             colorFade(edges.top, 'top');
             colorFade(edges.bottom, 'bottom');
-            // colorFade(allPixels, 'full');
+           
             backgroundRadialGradient(getAverageColor(edges.total));
-            console.log(getAverageColor(edges.top));
-            console.log(getAverageColor(edges.right));
-            console.log(getAverageColor(edges.bottom));
-            console.log(getAverageColor(edges.left));
-            console.log(getAverageColor(edges.total));
         }
     }
 
@@ -64,7 +58,6 @@ export default function ColorSchemer({image}){
         let topEdgePixels = [];
         let bottomEdgePixels = [];
         const rowLength = canvasRef.current.width * 4;
-        console.log(rowLength)
         const numberOfRows = (colorArrayRef.current.data.length)/rowLength
         for(let i=0; i<numberOfRows; i++){
             let leftEdgeIndex = i * rowLength;
@@ -120,10 +113,7 @@ export default function ColorSchemer({image}){
                 })
             }
         }
-        // console.log(leftEdgePixels)
-        // console.log(rightEdgePixels)
-        // console.log(topEdgePixels)
-        // console.log(bottomEdgePixels)
+
         const totalEdgePixels = [...leftEdgePixels, ...rightEdgePixels, ...topEdgePixels, ...bottomEdgePixels];
 
         return {
@@ -190,7 +180,7 @@ export default function ColorSchemer({image}){
 
         const backgroundDimensions = backgroundRef.current.getBoundingClientRect();
         const canvasDimensions = canvasRef.current.getBoundingClientRect();
-        console.log(backgroundDimensions)
+    
         const backgroundWidth = backgroundDimensions.width;
         const backgroundHeight = backgroundDimensions.height;
         

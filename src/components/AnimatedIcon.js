@@ -6,41 +6,7 @@ import { useStateContext, useDispatchContext } from 'utils/ReducerContext';
 export default function AnimatedIcon({mp3, forHero}){
 const state = useStateContext();
 const dispatch = useDispatchContext();
-// useEffect(()=>{
-//     class Dictionary{
-//         constructor(wordsArray){
-//             this.dict = wordsArray
-//         }
-//         isInDict(word){
-//           let includesWord = false;
-//             const splitWord = word.split('');
-//             this.dict.forEach((dictWord)=>{
-//                 const wildcard = '*';
-                
-//                 let splitDictWord = dictWord.split('');
-//                 let indexOfWildcard = splitDictWord.indexOf(wildcard);
-    
-//                 if(indexOfWildcard !== -1){
-//                     splitDictWord.splice(indexOfWildcard, 1);
-//                 }
-//                 if(splitDictWord.every((letter)=> splitWord.includes(letter))){
-//                   includesWord = true;
-//                 }
-//             })
-//             return includesWord;
-//         }
-//     }
-
-//     const dictionaryOne = new Dictionary(['hello', 'c*t', '*at', 'ca*', 'john', 'runni*g']);
-//     console.log(dictionaryOne.isInDict('running'))
-//     console.log(dictionaryOne.isInDict('cat'))
-//     console.log(dictionaryOne.isInDict('cal'))
-//     console.log(dictionaryOne.isInDict('cut'))
-//     console.log(dictionaryOne.isInDict('cil'))
-//     console.log(dictionaryOne.isInDict('c*t'))
-// },[])
-    
-
+ 
 if(forHero){
     return (
         <>

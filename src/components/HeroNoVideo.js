@@ -49,7 +49,6 @@ export default function HeroNoVideo ({font, artistData}){
                 isHeroPlaying.current = false;
                 dispatch({type: ACTIONS.IS_PAST_SCROLL_Y_THRESHOLD, payload: true})
             }
-        console.log('listener working')
     },[])
 
 
@@ -71,11 +70,9 @@ export default function HeroNoVideo ({font, artistData}){
     useEffect(()=>{
         if(!isAudioFinished && !state.isSongPlaying && !state.isHeroMuted){
             window.addEventListener('scroll', trackScroll, true)
-            console.log('added listener')
         }
         if(state.isSongPlaying){
             window.removeEventListener('scroll', trackScroll, true)
-            console.log('cleanup removed listener')
         }
 
         setIsAudioFinished(false)
@@ -90,7 +87,6 @@ export default function HeroNoVideo ({font, artistData}){
                 if(audioRef.current.volume - V_STEP < MIN){
                     audioRef.current.volume = MIN;
                 }
-                console.log(audioRef.current.volume)
             }, INTERVAL)
             setTimeout(() => {
                 clearInterval((fadeOut));
@@ -127,7 +123,6 @@ export default function HeroNoVideo ({font, artistData}){
                         if(audioRef.current.volume + V_STEP > MAX){
                             audioRef.current.volume = MAX
                         }
-                        console.log(audioRef.current.volume)
                     }, INTERVAL)
                     setTimeout(() => {
                         clearInterval((fadeIn));

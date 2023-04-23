@@ -56,6 +56,7 @@ export default function SideBar({font}){
             getUserHistory().then((history)=>{
                 console.log(history.history);
                 const dedupedHistory = [...new Map(history.history.map((song)=>[song.songName, song])).values()]
+                console.log('deduped: ', dedupedHistory)
                 dispatch({type: ACTIONS.SET_USER_HISTORY, payload: dedupedHistory})
                 // setUserHistory(dedupedHistory);
                 setLoading(false);

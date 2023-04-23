@@ -72,7 +72,6 @@ export default function SearchBar () {
                                 }}
                                 onKeyUp={(e)=>{
                                     if(e.key === 'Enter'){
-                                        console.log('working')
                                         if(searchResultsRef.current){
                                             document.location.replace(`/artists?name=${artistInfo.name}`)
                                         }
