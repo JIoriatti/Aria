@@ -28,6 +28,8 @@ export default function SongProvider({children}){
         isTimerHit: true,
         hasSongEnded: false,
         isSongPlaying: false,
+        userHistory: null,
+        isHistoryPlaying: false,
     })
     return (
         <div>

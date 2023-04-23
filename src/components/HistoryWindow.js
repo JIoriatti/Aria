@@ -22,6 +22,16 @@ export default function HistoryWindow({sideBarRef, iconContainerRef}){
     const initialHeightRef = useRef(height);
 
 
+    //to access state since bottom song bar player can only access songState
+    useEffect(()=>{
+        if(songState.isHistoryPlaying && state.isSongPlaying){
+            dispatch({type: ACTIONS.SET_IS_HISTORY_PLAYING, payload: true})
+        }
+        if(!songState.isHistoryPlaying && !state.isSongPlaying){
+            dispatch({type: ACTIONS.SET_IS_HISTORY_PLAYING, payload: false})
+        }
+    },[songState.isHistoryPlaying, state.isSongPlaying])
+
     useEffect(()=>{
         if(!songState.isTimerHit){
             setHeight((prevHeight)=> prevHeight -= 75)
@@ -73,6 +83,8 @@ export default function HistoryWindow({sideBarRef, iconContainerRef}){
                                         songDispatch({ type: ACTIONS.SET_IS_SONG_PLAYING, payload: false })
                                         songState.currentSong.pause();
                                         dispatch({type:ACTIONS.SET_IS_HISTORY_PLAYING, payload: false})
+
+                                        dispatch({type: ACTIONS.IS_HERO_PLAYING, payload: false})
                                     }}
                                     title='Pause'
                                 >
@@ -94,8 +106,8 @@ export default function HistoryWindow({sideBarRef, iconContainerRef}){
                                         colorScheme(e.target.dataset.image, dispatch, state)
                                         handleSongChangeState(e, state, dispatch, songDispatch);
                                         dispatch({type:ACTIONS.SET_IS_HISTORY_PLAYING, payload: true})
+
                                         dispatch({type: ACTIONS.IS_HERO_PLAYING, payload: false})
-                                        
                                         state.heroVideo.pause();
                                     }}
                                     title='Play'

@@ -29,7 +29,7 @@ export default function ReducerProvider ({children}){
         songName: '',
         scrollYPosition: 0,
         isHeroMuted: true,
-        isHeroPlaying: true,
+        isHeroPlaying: false,
         isPastScrollYThreshold: false,
         isSearchExpanded: false,
         searchInput: '',

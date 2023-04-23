@@ -40,6 +40,7 @@ export default function HeroNoVideo ({font, artistData}){
                 if(!state.isSongPlaying && state.isHeroMuted){
                     audioRef.current.play();
                     isHeroPlaying.current = true;
+                    dispatch({type: ACTIONS.IS_HERO_PLAYING, payload: true})
                     dispatch({type: ACTIONS.IS_PAST_SCROLL_Y_THRESHOLD, payload: false})
                 }
             }
@@ -47,6 +48,7 @@ export default function HeroNoVideo ({font, artistData}){
                 // audioRef.current.volume = MIN;
                 // audioRef.current.pause();
                 isHeroPlaying.current = false;
+                dispatch({type: ACTIONS.IS_HERO_PLAYING, payload: false})
                 dispatch({type: ACTIONS.IS_PAST_SCROLL_Y_THRESHOLD, payload: true})
             }
     },[])
@@ -55,6 +57,7 @@ export default function HeroNoVideo ({font, artistData}){
     const handleReplay = useCallback(()=>{
         setIsAudioFinished(false);
         isHeroPlaying.current = true;
+        dispatch({type: ACTIONS.IS_HERO_PLAYING, payload: true})
         // audioRef.current.volume = MAX
         audioRef.current.play();
         dispatch({type: ACTIONS.IS_HERO_MUTED, payload : false})
@@ -111,6 +114,7 @@ export default function HeroNoVideo ({font, artistData}){
                 onEnded={()=>{
                     setIsAudioFinished(true);
                     isHeroPlaying.current = false;
+                    dispatch({type: ACTIONS.IS_HERO_PLAYING, payload: false})
                     dispatch({type: ACTIONS.IS_HERO_MUTED, payload : true})
                     window.removeEventListener('scroll', trackScroll, true);
                     audioRef.current.volume = MIN;
@@ -153,13 +157,13 @@ export default function HeroNoVideo ({font, artistData}){
             <motion.h1
                 className={styles.name}
                 initial={{ translateY: 0, originY: 0 }}
-                animate={{ translateY: isHeroPlaying.current ? -300 : 0, originY: 0 }}
+                animate={{ translateY: state.isHeroPlaying ? -300 : 0, originY: 0 }}
                 // exit={{translateY: 0, originY: 0}}
                 transition={{ delay: 0, duration: 0.5, ease: 'easeInOut' }}
             >
                 {artistData?.artistInfo?.name}
             </motion.h1>
-            <HeroTrack font={font} track={artistData?.albums[8]} trackDetails={artistData?.tracks[8].tracks.items[0]} isHeroPlaying={isHeroPlaying.current} isAudioOnly={true}/>
+            <HeroTrack font={font} track={artistData?.albums[8]} trackDetails={artistData?.tracks[8].tracks.items[0]} isHeroPlaying={state.isHeroPlaying} isAudioOnly={true}/>
             <div id='heroImageFade' className={styles.heroImageFade}></div>
             <div className={styles.fadeToBlack}></div>
 
@@ -175,6 +179,7 @@ export default function HeroNoVideo ({font, artistData}){
                                         hasUserInteracted.current = true;
                                         audioRef.current.play();
                                         isHeroPlaying.current = true;
+                                        dispatch({type: ACTIONS.IS_HERO_PLAYING, payload: true})
                                         window.addEventListener('scroll', trackScroll, true)
                                     }}
                                     name='mute'
@@ -186,6 +191,7 @@ export default function HeroNoVideo ({font, artistData}){
                                         dispatch({ type: ACTIONS.IS_HERO_MUTED, payload: true })
                                         audioRef.current.pause();
                                         isHeroPlaying.current = false;
+                                        dispatch({type: ACTIONS.IS_HERO_PLAYING, payload: false})
                                         window.removeEventListener('scroll', trackScroll, true)
                                     }}
                                     name='unmute'
