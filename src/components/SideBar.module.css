@@ -11,8 +11,22 @@
 
     z-index: 10000;
 }
+.exit{
+    position: absolute;
+    top: 10px;
+    z-index: 5;
+    right: 10px;
+    height: 30px;
+    width: 30px;
+    background-image: url('/cross.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+    cursor: pointer;
+}
 .sideBar{
     position: relative;
+    padding-top: 30px;
     display: flex;
     flex-direction: row;
     width: 100%;

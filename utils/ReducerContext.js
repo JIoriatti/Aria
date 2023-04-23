@@ -42,6 +42,8 @@ export default function ReducerProvider ({children}){
             left: 0,
             right: 0,
         },
+        isHistoryPlaying: false,
+        userHistory: null,
     });
 
 return (

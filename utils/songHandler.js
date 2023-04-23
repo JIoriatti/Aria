@@ -45,6 +45,12 @@ const fadeSongOut = (newSong) => {
 }
 
 export const handleSongChange = (e, state, dispatch, songDispatch) => {
+    if(state.userHistory.some((song)=> song.songName === e.target.dataset.song)){
+        dispatch({type: ACTIONS.SET_IS_HISTORY_PLAYING, payload: true})
+    }
+    else{
+        dispatch({type: ACTIONS.SET_IS_HISTORY_PLAYING, payload: false})
+    }
     if (e.target.dataset.mp3 === state?.selectedMp3 && !state?.isSongPlaying) {
         state.currentSong.play();
     }
@@ -92,6 +98,7 @@ export const handleSongChange = (e, state, dispatch, songDispatch) => {
             //temporary -- change back to 0 when re-rendering is fixed
             dispatch({type: ACTIONS.SET_SONG_TIME, payload: 0})
             songDispatch({type: ACTIONS.SET_SONG_TIME, payload: 0})
+            dispatch({type:ACTIONS.SET_IS_HISTORY_PLAYING, payload: false})
             if(!state.isPastScrollYThreshold){
                 dispatch({type: ACTIONS.IS_HERO_PLAYING, payload: true})
             }

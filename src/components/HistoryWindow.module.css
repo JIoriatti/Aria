@@ -22,28 +22,38 @@
 .container{
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 4px;
     width:90%;
-    /* height: 650px;
-    max-height: 650px; */
     color: white;
     overflow-y: scroll;
     overflow-x: hidden;
     margin-top: 1em;
+    padding-top: 5px;
 }
 .songContainer{
     display: flex;
     position: relative;
-    /* justify-content: space-between; */
     align-items: center;
     cursor: pointer;
     border-radius: 5px;
+    min-height: 70px;
+    /* height: 65px; */
     width: 260px;
+    z-index: 1;
 }
 .songContainer:hover{
     background-color: var(--themeColorLight);
 }
-.playButton,.heart{
+.background{
+    position: absolute;
+    background-color: var(--accentBlue);
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    border-radius: 5px;
+    z-index: 0;
+}
+.playButton,.heart,.pauseButton{
     position: absolute;
     bottom: 5px;
     display: flex;
@@ -60,13 +70,13 @@
 
     transition: 0.1s ease;
 }
-.playButton{
+.playButton,.pauseButton{
     right: 12px;
 }
 .heart{
     right: 55px;
 }
-.playButton:hover,.heart:hover{
+.playButton:hover,.heart:hover,.pauseButton:hover{
     background-color: rgb(82, 82, 82);
 }
 .miniBtnImage{
@@ -76,8 +86,12 @@
 .playImage{
     padding-left: 5px;
 }
+.playImage,.pauseImage,.heartImage{
+    pointer-events: none;
+}
 .imageContainer{
     display: block;
+    margin-left: 5px;
     width: 60px;
     min-width: 60px;
     height: 60px;
@@ -85,19 +99,23 @@
     border-radius: 5px;
     overflow: hidden;
     pointer-events: none;
+    z-index: 1;
 }
 .image{
     height: 100%;
     width: 100%;
+    pointer-events: none;
 }
 .infoContainer{
     display: flex;
-    margin-left: 20px;
+    margin-left: 10px;
     flex-grow: 1;
     max-width: 85%;
     flex-direction: column;
     align-items: flex-start;
     justify-content: space-between;
+    pointer-events: none;
+    z-index: 1;
 }
 .songName,.songArtist{
     max-width: 80%;
@@ -106,6 +124,7 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    pointer-events: none;
 }
 .songName{
     font-size: 18px;

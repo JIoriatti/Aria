@@ -52,6 +52,10 @@ export const reducer = (state, action)=>{
             return {...state, colorObj: action.payload}
         case ACTIONS.SET_VISIBILITY_OBJ:
             return {...state, visibilityObj: action.payload}
+        case ACTIONS.SET_IS_HISTORY_PLAYING:
+            return {...state, isHistoryPlaying: action.payload}
+        case ACTIONS.SET_USER_HISTORY:
+            return {...state, userHistory: action.payload}
         default:
             throw new Error();
     }

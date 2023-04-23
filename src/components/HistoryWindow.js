@@ -7,19 +7,20 @@ import { ACTIONS } from 'utils/actions';
 import { handleSongChange, handleSongChangeState } from 'utils/songHandler';
 import { colorScheme } from 'utils/colorScheme';
 
-export default function HistoryWindow({history, sideBarRef, iconContainerRef}){
+export default function HistoryWindow({sideBarRef, iconContainerRef}){
     const songState = useSongStateContext();
     const songDispatch = useSongDispatchContext();
     const state = useStateContext();
     const dispatch = useDispatchContext();
-    const [height, setHeight] = useState(sideBarRef.current.clientHeight - iconContainerRef.current.clientHeight - 125)
+    const [height, setHeight] = useState(sideBarRef.current.clientHeight - iconContainerRef.current.clientHeight - 175)
     const [hoveredSong, setHoveredSong] = useState(null);
+    
     const initialHeightRef = useRef(height);
 
 
     useEffect(()=>{
         if(!songState.isTimerHit){
-            setHeight((prevHeight)=> prevHeight -= 60)
+            setHeight((prevHeight)=> prevHeight -= 75)
         }
         else{
             setHeight(initialHeightRef.current)
@@ -33,7 +34,7 @@ export default function HistoryWindow({history, sideBarRef, iconContainerRef}){
             animate={{originY: 0, height: `${height}px`}}
             exit={{height: 0}}
         >
-            {history.map((song,i)=>{
+            {state.userHistory.map((song,i)=>{
                 return <div 
                             key={i}
                             className={styles.songContainer}
@@ -47,35 +48,70 @@ export default function HistoryWindow({history, sideBarRef, iconContainerRef}){
                                 setHoveredSong(null)
                             }}
                         >
-                            {hoveredSong === song.id && 
-                                <>
-                                    <div className={styles.playButton}>
-                                        <img 
-                                            src="/bottomPlayWhite.png" 
-                                            alt="Play"
-                                            title='Play'
-                                            data-mp3={song.previewMp3}
-                                            data-image={song.miniImage}
-                                            data-song={song.songName}
-                                            data-artist={song.artistsNames[0]}
-                                            className={styles.miniBtnImage + ' ' + styles.playImage} 
-                                            onClick={(e)=>{
-                                                handleSongChange(e, state, dispatch, songDispatch)
-                                                colorScheme(e.target.dataset.image, dispatch, state)
-                                                handleSongChangeState(e, state, dispatch, songDispatch);
-                                            }}
-                                        />
-                                    </div>
-                                    <div className={styles.heart}>
-                                        <img 
-                                            src="/heart-svgrepo-com.png" 
-                                            alt="Favorite" 
-                                            title='Favorite'
-                                            className={styles.miniBtnImage} 
-                                        />
-                                    </div>
-                                </>
+                            <motion.div
+                                className={styles.background}
+                                animate={{
+                                    opacity: state.isSongPlaying && state.selectedMp3 === song.previewMp3? 1 : 0
+                                }}
+                                transition={{duration: 0.4}}
+                            ></motion.div>
+                    {(hoveredSong === song.id || (state.isSongPlaying && state.selectedMp3 === song.previewMp3)) &&
+                        <>
+                            {state.isSongPlaying && state.selectedMp3 === song.previewMp3 ?
+                                <div 
+                                    className={styles.pauseButton}
+                                    data-mp3={song.previewMp3}
+                                    data-image={song.miniImage}
+                                    data-song={song.songName}
+                                    data-id={song.id}
+                                    data-artist={song.artistsNames[0]}
+                                    onClick={(e) => {
+                                        songDispatch({ type: ACTIONS.SET_IS_SONG_PLAYING, payload: false })
+                                        songState.currentSong.pause();
+                                        dispatch({type:ACTIONS.SET_IS_HISTORY_PLAYING, payload: false})
+                                    }}
+                                >
+                                    <img
+                                        src="/pauseWhiteSmall.png"
+                                        alt="Pause"
+                                        title='Pause'
+
+                                        className={styles.miniBtnImage + ' ' + styles.pauseImage}
+                                    />
+                                </div>
+                                :
+                                <div 
+                                    className={styles.playButton}
+                                    data-mp3={song.previewMp3}
+                                    data-image={song.miniImage}
+                                    data-song={song.songName}
+                                    data-artist={song.artistsNames[0]}
+                                    onClick={(e) => {
+                                        handleSongChange(e, state, dispatch, songDispatch)
+                                        colorScheme(e.target.dataset.image, dispatch, state)
+                                        handleSongChangeState(e, state, dispatch, songDispatch);
+                                        dispatch({type:ACTIONS.SET_IS_HISTORY_PLAYING, payload: true})
+                                    }}
+                                >
+                                    <img
+                                        src="/bottomPlayWhite.png"
+                                        alt="Play"
+                                        title='Play'
+
+                                        className={styles.miniBtnImage + ' ' + styles.playImage}
+                                    />
+                                </div>
                             }
+                            <div className={styles.heart}>
+                                <img
+                                    src="/heart-svgrepo-com.png"
+                                    alt="Favorite"
+                                    title='Favorite'
+                                    className={styles.miniBtnImage}
+                                />
+                            </div>
+                        </>
+                    }
                             <div
                                 className={styles.imageContainer}   
                             >
