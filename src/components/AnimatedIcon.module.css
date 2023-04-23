@@ -26,3 +26,9 @@
     top: 210px;
     left: 10px;
 }
+.forSideBar{
+    position: absolute;
+    top: 35px;
+    left: 10px;
+    z-index: 2;
+}

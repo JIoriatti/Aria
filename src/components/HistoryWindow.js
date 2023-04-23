@@ -8,6 +8,7 @@ import { handleSongChange, handleSongChangeState } from 'utils/songHandler';
 import { colorScheme } from 'utils/colorScheme';
 import { handleFavoriteClick } from 'utils/handleFavorite';
 import { useSession } from 'next-auth/react';
+import AnimatedIcon from './AnimatedIcon';
 
 export default function HistoryWindow({sideBarRef, iconContainerRef}){
     const songState = useSongStateContext();
@@ -62,6 +63,7 @@ export default function HistoryWindow({sideBarRef, iconContainerRef}){
                                 setHoveredSong(null)
                             }}
                         >
+                            <AnimatedIcon mp3={song.previewMp3} forSideBar={true}/>
                             <motion.div
                                 className={styles.background}
                                 animate={{
@@ -93,7 +95,7 @@ export default function HistoryWindow({sideBarRef, iconContainerRef}){
                                         alt="Pause"
                                         className={styles.miniBtnImage + ' ' + styles.pauseImage}
                                         animate={{opacity: state.isHistoryPlaying && state.selectedMp3 === song.previewMp3 ? 1 : 0}}
-                                        transition={{duration: 0.1}}
+                                        transition={{duration: 0.2}}
                                     />
                                 </div>
                                 :
@@ -119,12 +121,16 @@ export default function HistoryWindow({sideBarRef, iconContainerRef}){
                                         alt="Play"
                                         className={styles.miniBtnImage + ' ' + styles.playImage}
                                         animate={{opacity: state.isHistoryPlaying && state.selectedMp3 === song.previewMp3 ? 0 : 1}}
-                                        transition={{duration: 0.1}}
+                                        transition={{duration: 0.2}}
                                     />
                                 </div>
                             }
                             <div 
                                 className={styles.heart}
+                                // style={{
+                                //     backgroundColor: state.userFavorites.some((favorite) => favorite.id === song.id) ? 'lightpink' : 'var(--themeColorLight)',
+                                //     boxShadow: state.userFavorites.some((favorite) => favorite.id === song.id) ? '0 0 10px 0 gold': '0 0 10px 0 black' 
+                                // }}
                                 title='Favorite'
                                 data-id={song.id}
                                 onClick={(e)=>{
