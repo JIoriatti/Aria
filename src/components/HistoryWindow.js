@@ -70,12 +70,11 @@ export default function HistoryWindow({sideBarRef, iconContainerRef}){
                                         songState.currentSong.pause();
                                         dispatch({type:ACTIONS.SET_IS_HISTORY_PLAYING, payload: false})
                                     }}
+                                    title='Pause'
                                 >
                                     <img
                                         src="/pauseWhiteSmall.png"
                                         alt="Pause"
-                                        title='Pause'
-
                                         className={styles.miniBtnImage + ' ' + styles.pauseImage}
                                     />
                                 </div>
@@ -92,21 +91,22 @@ export default function HistoryWindow({sideBarRef, iconContainerRef}){
                                         handleSongChangeState(e, state, dispatch, songDispatch);
                                         dispatch({type:ACTIONS.SET_IS_HISTORY_PLAYING, payload: true})
                                     }}
+                                    title='Play'
                                 >
                                     <img
                                         src="/bottomPlayWhite.png"
                                         alt="Play"
-                                        title='Play'
-
                                         className={styles.miniBtnImage + ' ' + styles.playImage}
                                     />
                                 </div>
                             }
-                            <div className={styles.heart}>
+                            <div 
+                                className={styles.heart}
+                                title='Favorite'
+                            >
                                 <img
                                     src="/heart-svgrepo-com.png"
                                     alt="Favorite"
-                                    title='Favorite'
                                     className={styles.miniBtnImage}
                                 />
                             </div>

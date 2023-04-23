@@ -86,6 +86,10 @@
 .playImage{
     padding-left: 5px;
 }
+.pauseImage{
+    height: 50%;
+    width: 50%;
+}
 .playImage,.pauseImage,.heartImage{
     pointer-events: none;
 }
