@@ -58,6 +58,8 @@ export const reducer = (state, action)=>{
             return {...state, userHistory: action.payload}
         case ACTIONS.SET_USER_FAVORITES:
             return {...state, userFavorites: action.payload}
+        case ACTIONS.SET_HERO_VIDEO:
+            return {...state, heroVideo: action.payload}
         default:
             throw new Error();
     }

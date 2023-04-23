@@ -45,6 +45,7 @@ export default function ReducerProvider ({children}){
         isHistoryPlaying: false,
         userHistory: null,
         userFavorites: null,
+        heroVideo: null,
     });
 
 return (

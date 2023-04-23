@@ -68,8 +68,8 @@ export default function SideBar({font}){
             <motion.div 
                 className={styles.container + ' ' + font}
                 layout={true}
-                style={{boxShadow: state.scrollYPosition !=0 ? ' 8px 8px 5px -5px var(--themeColorLight)' : 'none'}}
-                animate={{width: (isHovered && state.scrollYPosition !=0)? 300 : 75, originX: 0, translateX: state.scrollYPosition !=0 ? 0 : -100}}
+                style={{boxShadow: state.scrollYPosition !=0 || (state.isHistoryPlaying)? ' 8px 8px 5px -5px var(--themeColorLight)' : 'none'}}
+                animate={{width: (isHovered && (state.scrollYPosition !=0) || (state.isHistoryPlaying && isShown && isHovered))? 300 : 75, originX: 0, translateX: state.scrollYPosition !=0 || (state.isHistoryPlaying && isShown && isHovered)? 0 : -100}}
                 transition={{width: {duration: 0.2, delay: isHovered ? 0.4 : 0}, translateX:{duration: 0.2, delay: state.scrollYPosition !=0 ? 0: 0.8}}}
                 onMouseEnter={()=>{
                     setIsUserHovering(true)
@@ -110,7 +110,7 @@ export default function SideBar({font}){
                     }
                     <motion.div 
                         className={styles.background}
-                        animate={{ opacity: state.scrollYPosition != 0 ? 1 : 0 }}
+                        animate={{ opacity: state.scrollYPosition === 0 && !state.isHistoryPlaying && isShown && isHovered ? 0 : 1 }}
                         transition={{ duration: 0.35 }}
                     >
                     </motion.div>

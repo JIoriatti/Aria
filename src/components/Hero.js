@@ -61,6 +61,8 @@ export default function Hero({font, artistData, videoRef}){
     },[])
     useEffect(() => {
         dispatch({type: ACTIONS.SET_IS_SONG_PLAYING, payload: false})
+        console.log(videoRef)
+        dispatch({type: ACTIONS.SET_HERO_VIDEO, payload: videoRef.current})
         videoRef.current.volume = MAX
         
         window.addEventListener('scroll', trackInView, true)

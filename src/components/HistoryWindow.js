@@ -94,6 +94,9 @@ export default function HistoryWindow({sideBarRef, iconContainerRef}){
                                         colorScheme(e.target.dataset.image, dispatch, state)
                                         handleSongChangeState(e, state, dispatch, songDispatch);
                                         dispatch({type:ACTIONS.SET_IS_HISTORY_PLAYING, payload: true})
+                                        dispatch({type: ACTIONS.IS_HERO_PLAYING, payload: false})
+                                        
+                                        state.heroVideo.pause();
                                     }}
                                     title='Play'
                                 >

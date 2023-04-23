@@ -208,11 +208,11 @@ return (
             }
           </AnimatePresence>
           <AnimatePresence>
-            {!loading && areRowsInView && !isFavoritesLoading &&
+            {!loading && !isFavoritesLoading &&
               <motion.div
                 initial={{opacity: 0}}
                 transition={{duration: 0.8}}
-                animate={{opacity: 1}}
+                animate={{opacity: areRowsInView? 1 : 0}}
                 exit={{opacity: 1}}
               >
                 <Carosel setTimerHit={setTimerHit} data={topTracks} loading={loading} videoRef={videoRef} mainRef={mainRef}/>
