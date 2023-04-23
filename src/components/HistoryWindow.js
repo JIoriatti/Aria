@@ -6,6 +6,7 @@ import { useSongStateContext } from 'utils/SongContext';
 export default function HistoryWindow({history, sideBarRef, iconContainerRef}){
     const songState = useSongStateContext();
     const [height, setHeight] = useState(sideBarRef.current.clientHeight - iconContainerRef.current.clientHeight - 125)
+    const [hoveredSong, setHoveredSong] = useState(null);
     const initialHeightRef = useRef(height);
 
     useEffect(()=>{
@@ -28,7 +29,34 @@ export default function HistoryWindow({history, sideBarRef, iconContainerRef}){
                 return <div 
                             key={i}
                             className={styles.songContainer}
+                            data-id={song.id}
+                            onMouseEnter={(e)=> {
+                                if(e.target.dataset.id === song.id){
+                                    setHoveredSong(e.target.dataset.id)
+                                }
+                            }}
+                            onMouseLeave={(e)=> {
+                                setHoveredSong(null)
+                            }}
                         >
+                            {hoveredSong === song.id && 
+                                <>
+                                    <div className={styles.playButton}>
+                                        <img 
+                                            src="/bottomPlayWhite.png" 
+                                            alt="Play"
+                                            className={styles.miniBtnImage + ' ' + styles.playImage} 
+                                        />
+                                    </div>
+                                    <div className={styles.heart}>
+                                        <img 
+                                            src="/heart-svgrepo-com.png" 
+                                            alt="Favorite" 
+                                            className={styles.miniBtnImage} 
+                                        />
+                                    </div>
+                                </>
+                            }
                             <div
                                 className={styles.imageContainer}   
                             >
@@ -49,14 +77,6 @@ export default function HistoryWindow({history, sideBarRef, iconContainerRef}){
                                 <div 
                                     className={styles.songArtist}
                                 >
-                                    {/* {song.artistsNames.map((artist,i, array)=>{
-                                        if(i<array.length -1){
-                                            return `${artist}, `;
-                                        }
-                                        else{
-                                            return artist
-                                        }
-                                    })} */}
                                     {song.artistsNames[0]}
                                 </div>
                             </div>

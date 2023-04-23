@@ -33,6 +33,7 @@
 }
 .songContainer{
     display: flex;
+    position: relative;
     /* justify-content: space-between; */
     align-items: center;
     cursor: pointer;
@@ -42,6 +43,39 @@
 .songContainer:hover{
     background-color: var(--themeColorLight);
 }
+.playButton,.heart{
+    position: absolute;
+    bottom: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+    box-shadow: 0 0 10px 0 black;
+    object-fit: cover;
+    z-index: 2;
+    background-color: var(--themeColorLight);
+    cursor: pointer;
+
+    transition: 0.1s ease;
+}
+.playButton{
+    right: 12px;
+}
+.heart{
+    right: 55px;
+}
+.playButton:hover,.heart:hover{
+    background-color: rgb(82, 82, 82);
+}
+.miniBtnImage{
+    height: 60%;
+    width: 60%;
+}
+.playImage{
+    padding-left: 5px;
+}
 .imageContainer{
     display: block;
     width: 60px;
@@ -50,6 +84,7 @@
     object-fit: cover;
     border-radius: 5px;
     overflow: hidden;
+    pointer-events: none;
 }
 .image{
     height: 100%;
@@ -59,7 +94,7 @@
     display: flex;
     margin-left: 20px;
     flex-grow: 1;
-    max-width: 90%;
+    max-width: 85%;
     flex-direction: column;
     align-items: flex-start;
     justify-content: space-between;
