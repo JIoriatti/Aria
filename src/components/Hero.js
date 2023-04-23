@@ -18,7 +18,6 @@ const SCROLL_Y_THRESHOLD = -500
 
 export default function Hero({font, artistData, videoRef}){
     // const [isMuted, setIsMuted] = useState(true);
-    const [isHeroPlaying, setIsHeroPlaying] = useState(true);
     const [thresholdHit, setThresholdHit] = useState(false)
     const [isVideoFinished, setIsVideoFinished] = useState(false)
     const [once, setOnce] = useState(true);
@@ -47,7 +46,7 @@ export default function Hero({font, artistData, videoRef}){
                         // setThresholdHit(true);
                     }
                     dispatch({type: ACTIONS.IS_HERO_PLAYING, payload: false})
-                    setIsHeroPlaying(false);
+                    
                 }
                 if (rect.y > SCROLL_Y_THRESHOLD) {
                     if (videoRef.current.paused) {
@@ -56,7 +55,7 @@ export default function Hero({font, artistData, videoRef}){
                         videoRef.current.play();
                     }
                     dispatch({type: ACTIONS.IS_HERO_PLAYING, payload: true})
-                    setIsHeroPlaying(true)
+                    
                 }
     },[])
     useEffect(() => {
@@ -104,7 +103,7 @@ export default function Hero({font, artistData, videoRef}){
                     autoPlay
                     onEnded={()=>{
                         setIsVideoFinished(true);
-                        setIsHeroPlaying(false);
+                        dispatch({type: ACTIONS.IS_HERO_PLAYING, payload: false})
                         window.removeEventListener('scroll', trackInView, true);
                     }}
                     onCanPlay={()=>{
@@ -127,7 +126,7 @@ export default function Hero({font, artistData, videoRef}){
                         setTimeout(() => {
                             clearInterval((fadeIn));
                         }, SHORT_DUR)
-                        setIsHeroPlaying(true);
+                        dispatch({type: ACTIONS.IS_HERO_PLAYING, payload: true})
                     }}
                     onTimeUpdate={()=>{
                         if(videoRef.current.currentTime > videoRef.current.duration * 0.97 && once){
@@ -212,16 +211,16 @@ export default function Hero({font, artistData, videoRef}){
                 <motion.h1
                     className={styles.name + ' ' + font}
                     initial={{translateY: 0, originY: 0}}
-                    animate={{translateY: isHeroPlaying? -300 : 0, originY: 0}}
+                    animate={{translateY: state.isHeroPlaying? -300 : 0, originY: 0}}
                     // exit={{translateY: 0, originY: 0}}
-                    transition={{delay:isHeroPlaying? 2 : 0, duration: 0.5, ease: 'easeInOut'}}
+                    transition={{delay:state.isHeroPlaying? 2 : 0, duration: 0.5, ease: 'easeInOut'}}
                 >
                     {artistData?.artistInfo?.name}
                 </motion.h1>
                 {artistData?.isJR ? 
-                <HeroTrack font={font} track={artistData?.albums[62]} trackDetails={artistData?.tracks[62].tracks.items[0]} isHeroPlaying={isHeroPlaying}/>
+                <HeroTrack font={font} track={artistData?.albums[62]} trackDetails={artistData?.tracks[62].tracks.items[0]} />
                 :
-                <HeroTrack font={font} track={artistData?.albums[8]} trackDetails={artistData?.tracks[8].tracks.items[0]} isHeroPlaying={isHeroPlaying}/>
+                <HeroTrack font={font} track={artistData?.albums[8]} trackDetails={artistData?.tracks[8].tracks.items[0]} />
             }                
             {/* <HeroTrack font={font} track={artistData?.albums[10]} trackDetails={artistData?.tracks[10].tracks.items[0]} isHeroPlaying={isHeroPlaying}/> */}
             {/* <Image

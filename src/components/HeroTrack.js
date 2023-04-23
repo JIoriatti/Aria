@@ -1,13 +1,16 @@
 import styles from './HeroTrack.module.css'
 import { AnimatePresence, motion } from 'framer-motion'
 import AnimatedIcon from './AnimatedIcon'
+import { useEffect } from 'react'
+import { useStateContext } from 'utils/ReducerContext'
 
-
-export default function HeroTrack ({font, track, trackDetails, isHeroPlaying, isAudioOnly}){
+export default function HeroTrack ({font, track, trackDetails, isAudioOnly}){
+    const state = useStateContext();
+    
     return (
         <>
             <AnimatePresence>
-                {isHeroPlaying && 
+                {state.isHeroPlaying && 
                     <motion.div 
                         className={styles.container + ' ' + font}
                         initial={{ opacity: 0}}

@@ -24,7 +24,7 @@ const SCROLL_Y_THRESHOLD = -500
 
 export default function HeroNoVideo ({font, artistData}){
     const hasUserInteracted = useRef(false);
-    const isHeroPlaying = useRef(false);
+    const isHeroPlayingRef = useRef(false);
     const [isAudioFinished, setIsAudioFinished] = useState(true);
     const audioRef = useRef();
     const containerRef = useRef();
@@ -39,7 +39,7 @@ export default function HeroNoVideo ({font, artistData}){
             if(hasUserInteracted.current && rect.y > -500){
                 if(!state.isSongPlaying && state.isHeroMuted){
                     audioRef.current.play();
-                    isHeroPlaying.current = true;
+                    isHeroPlayingRef.current = true;
                     dispatch({type: ACTIONS.IS_HERO_PLAYING, payload: true})
                     dispatch({type: ACTIONS.IS_PAST_SCROLL_Y_THRESHOLD, payload: false})
                 }
@@ -47,7 +47,7 @@ export default function HeroNoVideo ({font, artistData}){
             if(hasUserInteracted.current && rect.y < -500){
                 // audioRef.current.volume = MIN;
                 // audioRef.current.pause();
-                isHeroPlaying.current = false;
+                isHeroPlayingRef.current = false;
                 dispatch({type: ACTIONS.IS_HERO_PLAYING, payload: false})
                 dispatch({type: ACTIONS.IS_PAST_SCROLL_Y_THRESHOLD, payload: true})
             }
@@ -56,7 +56,7 @@ export default function HeroNoVideo ({font, artistData}){
 
     const handleReplay = useCallback(()=>{
         setIsAudioFinished(false);
-        isHeroPlaying.current = true;
+        isHeroPlayingRef.current = true;
         dispatch({type: ACTIONS.IS_HERO_PLAYING, payload: true})
         // audioRef.current.volume = MAX
         audioRef.current.play();
@@ -113,7 +113,7 @@ export default function HeroNoVideo ({font, artistData}){
                 src={artistData?.tracks[8].tracks.items[0].preview_url}
                 onEnded={()=>{
                     setIsAudioFinished(true);
-                    isHeroPlaying.current = false;
+                    isHeroPlayingRef.current = false;
                     dispatch({type: ACTIONS.IS_HERO_PLAYING, payload: false})
                     dispatch({type: ACTIONS.IS_HERO_MUTED, payload : true})
                     window.removeEventListener('scroll', trackScroll, true);
@@ -163,7 +163,7 @@ export default function HeroNoVideo ({font, artistData}){
             >
                 {artistData?.artistInfo?.name}
             </motion.h1>
-            <HeroTrack font={font} track={artistData?.albums[8]} trackDetails={artistData?.tracks[8].tracks.items[0]} isHeroPlaying={state.isHeroPlaying} isAudioOnly={true}/>
+            <HeroTrack font={font} track={artistData?.albums[8]} trackDetails={artistData?.tracks[8].tracks.items[0]} isHeroPlayingRef={isHeroPlayingRef} isAudioOnly={true}/>
             <div id='heroImageFade' className={styles.heroImageFade}></div>
             <div className={styles.fadeToBlack}></div>
 
@@ -178,7 +178,7 @@ export default function HeroNoVideo ({font, artistData}){
                                         dispatch({ type: ACTIONS.IS_HERO_MUTED, payload: false })
                                         hasUserInteracted.current = true;
                                         audioRef.current.play();
-                                        isHeroPlaying.current = true;
+                                        isHeroPlayingRef.current = true;
                                         dispatch({type: ACTIONS.IS_HERO_PLAYING, payload: true})
                                         window.addEventListener('scroll', trackScroll, true)
                                     }}
@@ -190,7 +190,7 @@ export default function HeroNoVideo ({font, artistData}){
                                     onClick={() => {
                                         dispatch({ type: ACTIONS.IS_HERO_MUTED, payload: true })
                                         audioRef.current.pause();
-                                        isHeroPlaying.current = false;
+                                        isHeroPlayingRef.current = false;
                                         dispatch({type: ACTIONS.IS_HERO_PLAYING, payload: false})
                                         window.removeEventListener('scroll', trackScroll, true)
                                     }}

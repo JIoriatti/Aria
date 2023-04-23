@@ -112,7 +112,7 @@ export default function SideBar({font}){
                     }
                     <motion.div 
                         className={styles.background}
-                        animate={{ opacity: state.scrollYPosition === 0 && (state.isHistoryPlaying && !isShown && !isHovered) ? 0 : 1 }}
+                        animate={{ opacity: state.scrollYPosition === 0 && (!state.isHistoryPlaying && !isShown && !isHovered) ? 0 : 1 }}
                         transition={{ duration: 0.35 }}
                     >
                     </motion.div>
