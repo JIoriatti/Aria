@@ -24,7 +24,6 @@ export default function SearchBar () {
         try{
             token.current = await getAccessToken();
             artistId.current = await getArtistId(token.current, userInput)
-            console.log(artistId.current)
             const artistData = await getArtistInfo(token.current, artistId.current)
             setArtistInfo(artistData);
         }catch(err){
@@ -36,8 +35,6 @@ export default function SearchBar () {
         if(debouncedSearch){
             fetchUserInput(debouncedSearch);
         }
-        console.log(artistId.current)
-        console.log(debouncedSearch) 
     },[debouncedSearch])
 
 
