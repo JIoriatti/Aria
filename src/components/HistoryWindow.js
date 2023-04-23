@@ -88,10 +88,12 @@ export default function HistoryWindow({sideBarRef, iconContainerRef}){
                                     }}
                                     title='Pause'
                                 >
-                                    <img
+                                    <motion.img
                                         src="/pauseWhiteSmall.png"
                                         alt="Pause"
                                         className={styles.miniBtnImage + ' ' + styles.pauseImage}
+                                        animate={{opacity: state.isHistoryPlaying && state.selectedMp3 === song.previewMp3 ? 1 : 0}}
+                                        transition={{duration: 0.1}}
                                     />
                                 </div>
                                 :
@@ -112,10 +114,12 @@ export default function HistoryWindow({sideBarRef, iconContainerRef}){
                                     }}
                                     title='Play'
                                 >
-                                    <img
+                                    <motion.img
                                         src="/bottomPlayWhite.png"
                                         alt="Play"
                                         className={styles.miniBtnImage + ' ' + styles.playImage}
+                                        animate={{opacity: state.isHistoryPlaying && state.selectedMp3 === song.previewMp3 ? 0 : 1}}
+                                        transition={{duration: 0.1}}
                                     />
                                 </div>
                             }
