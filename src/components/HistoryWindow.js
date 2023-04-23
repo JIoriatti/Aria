@@ -1,13 +1,21 @@
 import { useEffect, useRef, useState } from 'react'
 import styles from './HistoryWindow.module.css'
 import { motion } from 'framer-motion'
-import { useSongStateContext } from 'utils/SongContext';
+import { useSongStateContext, useSongDispatchContext } from 'utils/SongContext';
+import { useStateContext, useDispatchContext } from 'utils/ReducerContext';
+import { ACTIONS } from 'utils/actions';
+import { handleSongChange, handleSongChangeState } from 'utils/songHandler';
+import { colorScheme } from 'utils/colorScheme';
 
 export default function HistoryWindow({history, sideBarRef, iconContainerRef}){
     const songState = useSongStateContext();
+    const songDispatch = useSongDispatchContext();
+    const state = useStateContext();
+    const dispatch = useDispatchContext();
     const [height, setHeight] = useState(sideBarRef.current.clientHeight - iconContainerRef.current.clientHeight - 125)
     const [hoveredSong, setHoveredSong] = useState(null);
     const initialHeightRef = useRef(height);
+
 
     useEffect(()=>{
         if(!songState.isTimerHit){
@@ -45,13 +53,24 @@ export default function HistoryWindow({history, sideBarRef, iconContainerRef}){
                                         <img 
                                             src="/bottomPlayWhite.png" 
                                             alt="Play"
+                                            title='Play'
+                                            data-mp3={song.previewMp3}
+                                            data-image={song.miniImage}
+                                            data-song={song.songName}
+                                            data-artist={song.artistsNames[0]}
                                             className={styles.miniBtnImage + ' ' + styles.playImage} 
+                                            onClick={(e)=>{
+                                                handleSongChange(e, state, dispatch, songDispatch)
+                                                colorScheme(e.target.dataset.image, dispatch, state)
+                                                handleSongChangeState(e, state, dispatch, songDispatch);
+                                            }}
                                         />
                                     </div>
                                     <div className={styles.heart}>
                                         <img 
                                             src="/heart-svgrepo-com.png" 
                                             alt="Favorite" 
+                                            title='Favorite'
                                             className={styles.miniBtnImage} 
                                         />
                                     </div>
