@@ -127,11 +127,15 @@
     background-image: url('../../public/heart-svgrepo-com.png');
     background-size: 75%;
 }
+.favorited{
+    background-image: url('../../public/redHeart.png');
+    background-size: 90%;
+}
 .plus{
     background-image: url('../../public/plus-svgrepo-com\ \(2\).png');
     background-size: 175%;
 }
-.heart,.plus{
+.heart,.plus,.favorited{
     height: 100%;
     width: 30px;
     background-position: center;
@@ -141,7 +145,7 @@
 
     transition: 0.1s all ease-in-out;
 }
-.heart:hover,.plus:hover{
+.heart:hover,.plus:hover,.favorited:hover{
     opacity: 0.7;
 }
 .test{

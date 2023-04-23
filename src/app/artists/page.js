@@ -35,7 +35,12 @@ export default function ArtistLandingPage() {
   const [compilations, setCompilations] = useState(null);
   const [areRowsInView, setAreRowsInView] = useState(false)
   const [isFeaturedTrackInView, setIsFeaturedTrackInView] = useState(false)
+  const [userFavorites, setUserFavorites] = useState(null);
+  const [isFavoritesLoading, setIsFavoritesLoading] = useState(true)
+
   const videoRef = useRef();
+
+  const {data: session, status} = useSession();
 
   const [loading, setLoading] = useState(true);
 
@@ -137,6 +142,28 @@ useEffect(()=>{
 
 },[state.scrollYPosition])
 
+
+    //get users favorites to render icons/inset shadow accordingly
+    useEffect(()=>{
+      const getUserFavorites = async()=>{
+          const response = await fetch(`/api/favorites/${session.user.id}`,{
+              method: 'GET',
+              headers: {
+                  'content-type' : 'application/json'
+              }
+          })
+          const user = await response.json();
+          console.log(user.favorites)
+          return user.favorites;
+      }
+      if(status === 'authenticated'){
+        getUserFavorites().then((favorites)=> {
+          setUserFavorites(favorites);
+          setIsFavoritesLoading(false);
+        })
+      }
+  },[status])
+
 return (
     <>
         <DynamicHeader
@@ -182,16 +209,16 @@ return (
             }
           </AnimatePresence>
           <AnimatePresence>
-            {!loading && areRowsInView &&
+            {!loading && areRowsInView && !isFavoritesLoading &&
               <motion.div
                 initial={{opacity: 0}}
                 transition={{duration: 0.8}}
                 animate={{opacity: 1}}
                 exit={{opacity: 1}}
               >
-                <Carosel setTimerHit={setTimerHit} data={topTracks} loading={loading} videoRef={videoRef} mainRef={mainRef}/>
-                <Carosel setTimerHit={setTimerHit} data={albums} loading={loading} videoRef={videoRef} mainRef={mainRef}/>
-                <Carosel setTimerHit={setTimerHit} data={singles} loading={loading} videoRef={videoRef} mainRef={mainRef}/>
+                <Carosel setTimerHit={setTimerHit} data={topTracks} loading={loading} videoRef={videoRef} mainRef={mainRef} userFavorites={userFavorites} setUserFavorites={setUserFavorites}/>
+                <Carosel setTimerHit={setTimerHit} data={albums} loading={loading} videoRef={videoRef} mainRef={mainRef} userFavorites={userFavorites} setUserFavorites={setUserFavorites}/>
+                <Carosel setTimerHit={setTimerHit} data={singles} loading={loading} videoRef={videoRef} mainRef={mainRef} userFavorites={userFavorites} setUserFavorites={setUserFavorites}/>
                 <ArtistInfo artistData={artistData} loading={loading}/>
               </motion.div>
             }

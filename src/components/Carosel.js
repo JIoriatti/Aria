@@ -19,8 +19,9 @@ const SHORT_DUR = 1000 //1000
 const LONG_DUR = 2000   //2000
 const DUR_THRESHOLD = 0.95
 
-export default function Carosel({setTimerHit, data, loading, videoRef, mainRef}){
+export default function Carosel({setTimerHit, data, loading, videoRef, mainRef, userFavorites, setUserFavorites}){
     const [isRowHovered, setIsRowHovered] = useState(false);
+    
     const state = useStateContext();
     const dispatch = useDispatchContext();
 
@@ -240,6 +241,11 @@ export default function Carosel({setTimerHit, data, loading, videoRef, mainRef})
                     songInfo,
                 })
             })
+            const response = await fetch(`/api/favorites/${session.user.id}`,{
+                method: 'GET'
+            })
+            const updatedFavorites = await response.json();
+            setUserFavorites(updatedFavorites.favorites);
     }catch(err){
         throw new Error(err)
     }
@@ -285,6 +291,7 @@ export default function Carosel({setTimerHit, data, loading, videoRef, mainRef})
             dispatch({type: ACTIONS.SET_IS_SONG_PLAYING, payload: true})
         }
     },[songState.isSongPlaying])
+
 
     if (!loading) {
         return (
@@ -481,7 +488,7 @@ export default function Carosel({setTimerHit, data, loading, videoRef, mainRef})
                                                                 className={styles.plus}
                                                             ></div>
                                                             <div
-                                                                className={styles.heart}
+                                                                className={userFavorites.some((song)=> song.spotifyId === album.id) ? styles.favorited : styles.heart}
                                                                 data-name={album.name}
                                                                 data-id={album.id}
                                                                 onClick={handleFavoriteClick}
@@ -499,6 +506,7 @@ export default function Carosel({setTimerHit, data, loading, videoRef, mainRef})
                                                         initial={{ opacity: 0, scaleY: 0, originY: 0, height: 200 }}
                                                         transition={{ duration: 0.2, delay: 0.5 }}
                                                         animate={{ opacity: 1, scaleY: 1, height: '100%' }}
+                                                        style={{boxShadow: userFavorites.some((song)=> song.spotifyId === album.id) ?'inset 0 0 20px 0 gold':'inset 0 0 20px 0 var(--accentBlue)'}}
                                                     >
                                                     </motion.div>
                                                 }
