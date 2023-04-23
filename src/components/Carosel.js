@@ -218,7 +218,7 @@ export default function Carosel({setTimerHit, data, loading, videoRef, mainRef, 
                                                     // data-color={image.color}
                                                     data-mp3={album?.tracks?.items[0]?.preview_url}
                                                     onClick={handleImageClick}
-                                                    animate={state.selectedMp3 === album.tracks.items[0].preview_url && state.isSongPlaying ? { borderRadius: state.hoveredImage === album.id ? '0px' : '5px', outline: '2px solid white' } : { borderRadius: state.hoveredImage === album.id ? '0px' : '5px', boxShadow: state.hoveredImage === album.id ? 'none' : null }}
+                                                    animate={state.selectedMp3 === album.tracks.items[0].preview_url && state.isSongPlaying ? { borderRadius: state.hoveredImage === album.id ? '0px' : '5px', outline: userFavorites.some((song)=> song.spotifyId === album.id) ? '2px solid gold' : '2px solid white' } : { borderRadius: state.hoveredImage === album.id ? '0px' : '5px', boxShadow: state.hoveredImage === album.id ? 'none' : null }}
                                                     transition={{ duration: 0.1, delay: state.hoveredImage === album.id ? 0.5 : 0 }}
 
                                                 >
@@ -266,7 +266,7 @@ export default function Carosel({setTimerHit, data, loading, videoRef, mainRef, 
                                                     data-mp3={album?.preview_url}
                                                     data-id={album.id}
                                                     onClick={handleImageClick}
-                                                    animate={state.selectedMp3 === album.preview_url && state.isSongPlaying ? { borderRadius: state.hoveredImage === album.id ? '0px' : '5px', outline: '2px solid white' } : { borderRadius: state.hoveredImage === album.id ? '0px' : '5px', boxShadow: state.hoveredImage === album.id ? 'none' : null }}
+                                                    animate={state.selectedMp3 === album.preview_url && state.isSongPlaying ? { borderRadius: state.hoveredImage === album.id ? '0px' : '5px', outline: userFavorites.some((song)=> song.spotifyId === album.id) ? '2px solid gold':'2px solid white' } : { borderRadius: state.hoveredImage === album.id ? '0px' : '5px', boxShadow: state.hoveredImage === album.id ? 'none' : null }}
                                                     transition={{ duration: 0.1, delay: state.hoveredImage === album.id ? 0.5 : 0 }}
 
                                                 >
