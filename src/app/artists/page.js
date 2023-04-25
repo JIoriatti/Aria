@@ -122,6 +122,7 @@ useEffect(()=>{
     setTopTracks(artistData.topTracks);
     setCompilations(uniqueCompilations);
     setArtistData(artistData);
+    console.log(artistData)
     return
   }).then(()=>{
     setLoading(false);
@@ -162,6 +163,22 @@ useEffect(()=>{
         })
       }
   },[status])
+
+//add artist to recent artists for user
+  useEffect(()=>{
+    const addToRecentArtists =async()=>{
+      const userId = session.user.id;
+      const response = await fetch(`/api/artists/${artistData.artistId}`,{
+        method: 'POST',
+        body: JSON.stringify({artistData, userId})
+      })
+      const resToJson = await response.json();
+      console.log(resToJson)
+    }
+    if(artistData){
+      addToRecentArtists();
+    }
+  },[artistData])
 
 return (
     <>
