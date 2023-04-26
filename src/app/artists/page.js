@@ -175,10 +175,10 @@ useEffect(()=>{
       const resToJson = await response.json();
       console.log(resToJson)
     }
-    if(artistData){
+    if(artistData && status ==='authenticated'){
       addToRecentArtists();
     }
-  },[artistData])
+  },[artistData, status])
 
 return (
     <>
