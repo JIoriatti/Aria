@@ -139,7 +139,7 @@ export default function HistoryWindow({sideBarRef, iconContainerRef}){
                                     }
                                 }}
                             >
-                            {state.userFavorites.some((favorite) => favorite.id === song.id) ?
+                            {state.userFavorites.some((favorite) => favorite.songName === song.songName) ?
                                 <img
                                     src="/redHeart.png"
                                     alt="Favorite"
