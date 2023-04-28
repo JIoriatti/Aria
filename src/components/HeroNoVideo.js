@@ -177,6 +177,7 @@ export default function HeroNoVideo ({font, artistData}){
                                     onClick={() => {
                                         dispatch({ type: ACTIONS.IS_HERO_MUTED, payload: false })
                                         hasUserInteracted.current = true;
+                                        audioRef.current.volume = 0;
                                         audioRef.current.play();
                                         isHeroPlayingRef.current = true;
                                         dispatch({type: ACTIONS.IS_HERO_PLAYING, payload: true})

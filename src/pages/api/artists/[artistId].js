@@ -16,11 +16,11 @@ const recentArtistHandler = async (req,res)=>{
 
 
 //Only needed for sending/storing entire Spotify API responses to DB
-// export const config = {
-//     api: {
-//         bodyParser: {
-//             sizeLimit: '4mb'
-//         }
-//     }
-// }
+export const config = {
+    api: {
+        bodyParser: {
+            sizeLimit: '4mb'
+        }
+    }
+}
 export default recentArtistHandler;
