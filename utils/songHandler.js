@@ -44,12 +44,14 @@ const fadeSongOut = (newSong) => {
     return () => clearTimeout(songFadeOutEnd);
 }
 
-export const handleSongChange = (e, state, dispatch, songDispatch) => {
-    if(state.userHistory.some((song)=> song.songName === e.target.dataset.song)){
-        dispatch({type: ACTIONS.SET_IS_HISTORY_PLAYING, payload: true})
-    }
-    else{
-        dispatch({type: ACTIONS.SET_IS_HISTORY_PLAYING, payload: false})
+export const handleSongChange = (e, state, dispatch, songDispatch, session) => {
+    if(session){
+        if(state.userHistory.some((song)=> song.songName === e.target.dataset.song)){
+            dispatch({type: ACTIONS.SET_IS_HISTORY_PLAYING, payload: true})
+        }
+        else{
+            dispatch({type: ACTIONS.SET_IS_HISTORY_PLAYING, payload: false})
+        }
     }
     if (e.target.dataset.mp3 === state?.selectedMp3 && !state?.isSongPlaying) {
         state.currentSong.play();
@@ -112,7 +114,7 @@ export const handleSongChange = (e, state, dispatch, songDispatch) => {
         fadeSongIn(newSong);
     }
 }
-export const handleSongChangeState = (e, state, dispatch, songDispatch) => {
+export const handleSongChangeState = (e, state, dispatch, songDispatch, session) => {
     dispatch({ type: ACTIONS.SET_BACKGROUND_IMAGE, payload: e.target.dataset.image })
     songDispatch({ type: ACTIONS.SET_BACKGROUND_IMAGE, payload: e.target.dataset.image })
 

@@ -37,9 +37,9 @@ export default function Carosel({setTimerHit, data, loading, videoRef, mainRef})
                 videoRef.current.pause();
             }
             // dispatch({type: ACTIONS.IS_HERO_MUTED, payload: true})
-            handleSongChangeState(e, state, dispatch, songDispatch);
+            handleSongChangeState(e, state, dispatch, songDispatch, session);
             setTimerHit(false)
-            handleSongChange(e, state, dispatch, songDispatch);
+            handleSongChange(e, state, dispatch, songDispatch, session);
             colorScheme(e.target.dataset.image, dispatch, state)
             if(e.target.dataset.mp3 !== state.selectedMp3){
                 addToHistory(e) 
@@ -184,7 +184,7 @@ export default function Carosel({setTimerHit, data, loading, videoRef, mainRef})
                                                     // data-color={image.color}
                                                     data-mp3={album?.tracks?.items[0]?.preview_url}
                                                     onClick={handleImageClick}
-                                                    animate={state.selectedMp3 === album.tracks.items[0].preview_url && state.isSongPlaying ? { borderRadius: state.hoveredImage === album.id ? '0px' : '5px', outline: state.userFavorites.some((song)=> song.songName === album.name) ? '2px solid gold' : '2px solid white' } : { borderRadius: state.hoveredImage === album.id ? '0px' : '5px', boxShadow: state.hoveredImage === album.id ? 'none' : null }}
+                                                    animate={state.selectedMp3 === album.tracks.items[0].preview_url && state.isSongPlaying ? { borderRadius: state.hoveredImage === album.id ? '0px' : '5px', outline: (session && state.userFavorites.some((song)=> song.songName === album.name)) ? '2px solid gold' : '2px solid white' } : { borderRadius: state.hoveredImage === album.id ? '0px' : '5px', boxShadow: state.hoveredImage === album.id ? 'none' : null }}
                                                     transition={{ duration: 0.1, delay: state.hoveredImage === album.id ? 0.5 : 0 }}
 
                                                 >
@@ -232,7 +232,7 @@ export default function Carosel({setTimerHit, data, loading, videoRef, mainRef})
                                                     data-mp3={album?.preview_url}
                                                     data-id={album.id}
                                                     onClick={handleImageClick}
-                                                    animate={state.selectedMp3 === album.preview_url && state.isSongPlaying ? { borderRadius: state.hoveredImage === album.id ? '0px' : '5px', outline: state.userFavorites.some((song)=> song.songName === album.name) ? '2px solid gold':'2px solid white' } : { borderRadius: state.hoveredImage === album.id ? '0px' : '5px', boxShadow: state.hoveredImage === album.id ? 'none' : null }}
+                                                    animate={state.selectedMp3 === album.preview_url && state.isSongPlaying ? { borderRadius: state.hoveredImage === album.id ? '0px' : '5px', outline: (session && state.userFavorites.some((song)=> song.songName === album.name)) ? '2px solid gold':'2px solid white' } : { borderRadius: state.hoveredImage === album.id ? '0px' : '5px', boxShadow: state.hoveredImage === album.id ? 'none' : null }}
                                                     transition={{ duration: 0.1, delay: state.hoveredImage === album.id ? 0.5 : 0 }}
 
                                                 >
@@ -322,12 +322,14 @@ export default function Carosel({setTimerHit, data, loading, videoRef, mainRef})
                                                             <div
                                                                 className={styles.plus}
                                                             ></div>
-                                                            <div
-                                                                className={state.userFavorites.some((song)=> song.songName === album.name) ? styles.favorited : styles.heart}
-                                                                data-name={album.name}
-                                                                data-id={album.id}
-                                                                onClick={(e)=>handleFavoriteClick(e, data, session, dispatch)}
-                                                            ></div>
+                                                            {session &&
+                                                                <div
+                                                                    className={state.userFavorites.some((song)=> song.songName === album.name) ? styles.favorited : styles.heart}
+                                                                    data-name={album.name}
+                                                                    data-id={album.id}
+                                                                    onClick={(e)=>handleFavoriteClick(e, data, session, dispatch)}
+                                                                ></div>
+                                                            }
                                                         </div>
 
                                                     </motion.div>
@@ -335,13 +337,13 @@ export default function Carosel({setTimerHit, data, loading, videoRef, mainRef})
                                             </AnimatePresence>
 
                                             <AnimatePresence>
-                                                {state.hoveredImage === album.id &&
+                                                {state.hoveredImage === album.id && 
                                                     <motion.div
                                                         className={styles.insetShadow}
                                                         initial={{ opacity: 0, scaleY: 0, originY: 0, height: 200 }}
                                                         transition={{ duration: 0.2, delay: 0.5 }}
                                                         animate={{ opacity: 1, scaleY: 1, height: '100%' }}
-                                                        style={{boxShadow: state.userFavorites.some((song)=> song.songName === album.name) ?'inset 0 0 20px 0 gold':'inset 0 0 20px 0 var(--accentBlue)'}}
+                                                        style={{boxShadow: ( session && state.userFavorites.some((song)=> song.songName === album.name)) ?'inset 0 0 20px 0 gold':'inset 0 0 20px 0 var(--accentBlue)'}}
                                                     >
                                                     </motion.div>
                                                 }

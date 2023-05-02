@@ -162,6 +162,9 @@ useEffect(()=>{
           setIsFavoritesLoading(false);
         })
       }
+      if(!session){
+        setIsFavoritesLoading(false);
+      }
   },[status])
 
 //add artist to recent artists for user
