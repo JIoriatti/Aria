@@ -69,7 +69,6 @@ export default function TestPage(){
                                         onTransitionEnd={()=>{
                                             if(count ===1){
                                                 setTimeout(()=>{
-                                                    console.log('done')
                                                     itemHolderRef.current.prepend(rowSectionRefs.current[rowSectionRefs.current.length-1])
                                                     let next = rowSectionRefs.current.pop()
                                                     rowSectionRefs.current.unshift(next)
@@ -77,7 +76,6 @@ export default function TestPage(){
                                             }
                                             else{
                                                 setTimeout(()=>{
-                                                    console.log('done')
                                                     itemHolderRef.current.appendChild(rowSectionRefs.current[0])
                                                     let next = rowSectionRefs.current.shift()
                                                     rowSectionRefs.current.push(next)

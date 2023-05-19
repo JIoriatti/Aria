@@ -67,7 +67,6 @@ export default function HeroNoVideo ({font, artistData}){
     useEffect(()=>{
         if(artistData){
             audioRef.current.volume = MIN
-            console.log(audioRef.current)
             dispatch({type: ACTIONS.SET_HERO_VIDEO, payload: audioRef.current})
         }
     },[artistData])

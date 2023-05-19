@@ -122,7 +122,6 @@ useEffect(()=>{
     setTopTracks(artistData.topTracks);
     setCompilations(uniqueCompilations);
     setArtistData(artistData);
-    console.log(artistData)
     return
   }).then(()=>{
     setLoading(false);
@@ -176,7 +175,6 @@ useEffect(()=>{
         body: JSON.stringify({artistData, userId})
       })
       const resToJson = await response.json();
-      console.log(resToJson)
     }
     if(artistData && status ==='authenticated'){
       addToRecentArtists();

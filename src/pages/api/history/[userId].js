@@ -6,14 +6,10 @@ const historyHandler = async (req, res)=>{
         if(req.method === 'POST'){
             const { songInfo } = JSON.parse(req.body);
             const response = await addToHistory(songInfo, userId);
-            if(response){
-                console.log(response);
-            }
             res.status(200).json(response);
         }
         if(req.method === 'GET'){
             const response = await getLatestHistory(userId);
-            console.log(response);
             res.status(200).json(response);
         }
     }catch(err){

@@ -73,10 +73,7 @@ export default function SongTimer() {
                                     <div 
                                         className={styles.pause}
                                         onClick={()=> {
-                                            
-                                                songDispatch({type: ACTIONS.SET_IS_HISTORY_PLAYING, payload: false})
-                                                console.log('working')
-                                            
+                                            songDispatch({type: ACTIONS.SET_IS_HISTORY_PLAYING, payload: false})                                            
                                             songDispatch({type: ACTIONS.SET_IS_SONG_PLAYING, payload: false})
                                             songState.currentSong.pause();
                                         }}
@@ -90,10 +87,7 @@ export default function SongTimer() {
                                     <div 
                                         className={styles.play}
                                         onClick={()=> {
-                                            
-                                                songDispatch({type: ACTIONS.SET_IS_HISTORY_PLAYING, payload: true})
-                                                console.log('working')
-                                            
+                                            songDispatch({type: ACTIONS.SET_IS_HISTORY_PLAYING, payload: true})
                                             songDispatch({type: ACTIONS.SET_IS_SONG_PLAYING, payload: true})
                                             songState.currentSong.play();
                                         }}

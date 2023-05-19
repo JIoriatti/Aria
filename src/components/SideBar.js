@@ -39,7 +39,6 @@ export default function SideBar({font}){
             setIsHovered(false)
         }
         if(!isHovered){
-            console.log('shown set to false')
             setIsShown(false);
         }
     },[isHovered, isExited])
@@ -53,14 +52,10 @@ export default function SideBar({font}){
           return history;
         }
         if(status === 'authenticated'){
-            console.log(session.user.id)
             getUserHistory().then((history)=>{
-                console.log(history.history);
                 const dedupedHistory = [...new Map(history.history.map((song)=>[song.songName, song])).values()]
-                console.log('deduped: ', dedupedHistory)
                 dispatch({type: ACTIONS.SET_USER_HISTORY, payload: dedupedHistory})
                 songDispatch({type: ACTIONS.SET_USER_HISTORY, payload: dedupedHistory})
-                // setUserHistory(dedupedHistory);
                 setLoading(false);
             })
         }
